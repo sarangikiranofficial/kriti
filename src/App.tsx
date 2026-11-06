@@ -7,6 +7,8 @@ import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AboutPage } from './pages/AboutPage';
+import { PortfolioPage } from './pages/PortfolioPage';
+import { ArtworkDetailPage } from './pages/ArtworkDetailPage';
 
 export function App() {
   return (
@@ -21,14 +23,8 @@ export function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/about" element={<AboutPage />} />
-                <Route
-                  path="/a/:slug"
-                  element={
-                    <div className="py-20 text-center text-charcoal/70">
-                      Portfolio preview. Full public portfolio page arriving in Phase 3.
-                    </div>
-                  }
-                />
+                <Route path="/a/:slug" element={<PortfolioPage />} />
+                <Route path="/a/:slug/artwork/:artworkId" element={<ArtworkDetailPage />} />
               </Routes>
             </main>
             <Footer />

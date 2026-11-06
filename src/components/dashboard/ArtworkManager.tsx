@@ -5,6 +5,7 @@ import { useToast } from '../common/Toast';
 import { supabase } from '../../lib/supabase';
 import { compressImage } from '../../lib/imageCompressor';
 import { EmptyState } from '../common/EmptyState';
+import { VoiceInput, ARTWORK_GUIDED_PROMPTS } from '../voice/VoiceInput';
 import type { Artwork, AvailabilityStatus } from '../../types/database.types';
 
 export const ArtworkManager: React.FC = () => {
@@ -252,7 +253,7 @@ export const ArtworkManager: React.FC = () => {
                   loading="lazy"
                 />
                 <span
-                  className={`absolute top-2 right-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md ${
+                  className={`absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md ${
                     art.availability === 'available'
                       ? 'bg-leaf-green/90 text-white'
                       : art.availability === 'sold'
@@ -483,13 +484,22 @@ export const ArtworkManager: React.FC = () => {
                 </div>
               </div>
 
-              {/* Cultural Context / Story */}
+              {/* Cultural Context / Story with Voice & Guided Prompts */}
               <div>
                 <label className="block text-xs font-semibold text-indigo-ink mb-1">
-                  Cultural Context / Story Behind This Piece <span className="text-madder-red">*</span>
+                  Cultural Context &amp; Story Behind This Piece <span className="text-madder-red">*</span>
                 </label>
+
+                {/* Voice Input with 3 Guided Prompts */}
+                <VoiceInput
+                  fieldLabel="Cultural context"
+                  guidedPrompts={ARTWORK_GUIDED_PROMPTS}
+                  currentValue={culturalContext}
+                  onTranscript={(text) => setCulturalContext(text)}
+                />
+
                 <textarea
-                  rows={4}
+                  rows={5}
                   required
                   value={culturalContext}
                   onChange={(e) => setCulturalContext(e.target.value)}
@@ -497,7 +507,7 @@ export const ArtworkManager: React.FC = () => {
                   className="w-full px-3 py-2 rounded-lg border border-terracotta/30 bg-warm-ivory text-sm text-charcoal focus:ring-2 focus:ring-madder-red outline-none leading-relaxed"
                 />
                 <span className="text-[11px] text-charcoal/60 mt-1 block">
-                  This narrative will be showcased on your artwork card, portfolio, and social captions.
+                  You can use the voice prompts above to speak in your native tongue, and edit with keyboard at any time.
                 </span>
               </div>
 

@@ -5,6 +5,7 @@ import { useToast } from '../common/Toast';
 import { supabase } from '../../lib/supabase';
 import { generateSlug } from '../../lib/slugify';
 import { compressImage } from '../../lib/imageCompressor';
+import { VoiceInput } from '../voice/VoiceInput';
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -280,11 +281,19 @@ export const ProfileEditor: React.FC = () => {
         </div>
       </div>
 
-      {/* Biography */}
+      {/* Biography with Voice Input */}
       <div>
         <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
           Artist Biography &amp; Heritage <span className="text-madder-red">*</span>
         </label>
+        
+        {/* Voice Input Integration */}
+        <VoiceInput
+          fieldLabel="Biography"
+          currentValue={bio}
+          onTranscript={(text) => setBio(text)}
+        />
+
         <textarea
           rows={4}
           required
@@ -294,7 +303,7 @@ export const ProfileEditor: React.FC = () => {
           className="w-full px-3.5 py-2.5 rounded-lg border border-terracotta/30 bg-warm-ivory focus:ring-2 focus:ring-madder-red outline-none text-sm text-charcoal leading-relaxed"
         />
         <span className="text-[11px] text-charcoal/60 mt-1 block">
-          Tip: You can use the Voice "Tell Your Story" mic feature on artwork cards to speak in your native tongue.
+          Speak in your mother tongue using the microphone above, or type directly into the box.
         </span>
       </div>
 

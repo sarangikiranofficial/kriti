@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapPin, Phone, MessageCircle, Share2, QrCode as QrIcon, X, Sparkles } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Share2, QrCode as QrIcon, X, Sparkles, MessageSquare, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { updateMetaTags } from '../lib/metaTags';
 import { CornerOrnament } from '../components/common/Motifs';
 import { EmptyState } from '../components/common/EmptyState';
 import { QRCodePanel } from '../components/share/QRCodePanel';
 import { ArtworkShareCard } from '../components/share/ArtworkShareCard';
+import { CaptionModal } from '../components/captions/CaptionModal';
+import { EnquiryModal } from '../components/enquiries/EnquiryModal';
 import type { Artist, Artwork } from '../types/database.types';
 
 export const PortfolioPage: React.FC = () => {
@@ -19,7 +21,10 @@ export const PortfolioPage: React.FC = () => {
   // Modals & Panels
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [selectedArtworkForShare, setSelectedArtworkForShare] = useState<Artwork | null>(null);
+  const [selectedArtworkForCaption, setSelectedArtworkForCaption] = useState<Artwork | null>(null);
   const [activeLightboxArtwork, setActiveLightboxArtwork] = useState<Artwork | null>(null);
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
+  const [enquiryArtwork, setEnquiryArtwork] = useState<Artwork | null>(null);
 
   useEffect(() => {
     const fetchArtistData = async () => {
@@ -89,6 +94,11 @@ export const PortfolioPage: React.FC = () => {
   }
 
   const portfolioUrl = `${window.location.origin}/a/${artist.slug}`;
+
+  const openEnquiry = (art?: Artwork) => {
+    setEnquiryArtwork(art || null);
+    setIsEnquiryModalOpen(true);
+  };
 
   return (
     <div className="pb-24">
@@ -161,6 +171,14 @@ export const PortfolioPage: React.FC = () => {
 
               {/* Direct Artist Contacts & Share Panel Button */}
               <div className="pt-3 flex flex-wrap items-center justify-center md:justify-start gap-3">
+                <button
+                  onClick={() => openEnquiry()}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-xs touch-target cursor-pointer"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Enquire / Commission</span>
+                </button>
+
                 {artist.whatsapp_number && (
                   <a
                     href={`https://wa.me/${artist.whatsapp_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
@@ -171,7 +189,7 @@ export const PortfolioPage: React.FC = () => {
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-xs font-semibold hover:bg-[#20ba59] transition shadow-xs touch-target"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>WhatsApp Artist</span>
+                    <span>WhatsApp</span>
                   </a>
                 )}
 
@@ -187,7 +205,7 @@ export const PortfolioPage: React.FC = () => {
 
                 <button
                   onClick={() => setIsQRModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-paper-cream border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:border-madder-red transition shadow-xs touch-target"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-paper-cream border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:border-madder-red transition shadow-xs touch-target cursor-pointer"
                 >
                   <QrIcon className="w-3.5 h-3.5 text-madder-red" />
                   <span>Share &amp; QR Code</span>
@@ -293,8 +311,16 @@ export const PortfolioPage: React.FC = () => {
 
                     <div className="flex items-center gap-1.5">
                       <button
+                        onClick={() => setSelectedArtworkForCaption(art)}
+                        className="p-1.5 rounded-lg border border-terracotta/30 text-indigo-ink hover:bg-paper-cream transition"
+                        title="Generate Social Captions"
+                      >
+                        <FileText className="w-3.5 h-3.5 text-terracotta" />
+                      </button>
+
+                      <button
                         onClick={() => setSelectedArtworkForShare(art)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-terracotta/30 text-indigo-ink font-semibold hover:bg-paper-cream transition touch-target"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-terracotta/30 text-indigo-ink font-semibold hover:bg-paper-cream transition"
                         title="Share Artwork Card"
                       >
                         <Share2 className="w-3.5 h-3.5 text-madder-red" />
@@ -303,7 +329,7 @@ export const PortfolioPage: React.FC = () => {
 
                       <button
                         onClick={() => setActiveLightboxArtwork(art)}
-                        className="px-3 py-1.5 rounded-lg bg-madder-red text-warm-ivory font-semibold hover:bg-madder-red/90 transition shadow-2xs touch-target"
+                        className="px-3 py-1.5 rounded-lg bg-madder-red text-warm-ivory font-semibold hover:bg-madder-red/90 transition shadow-2xs cursor-pointer"
                       >
                         View Story
                       </button>
@@ -318,26 +344,20 @@ export const PortfolioPage: React.FC = () => {
 
       {/* Sticky Mobile Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-warm-ivory/95 backdrop-blur-md border-t border-terracotta/30 p-3 sm:hidden shadow-lg flex items-center justify-around gap-2">
-        {artist.whatsapp_number && (
-          <a
-            href={`https://wa.me/${artist.whatsapp_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-              `Namaskaram ${artist.name}, I am viewing your portfolio on Kala Katha and would like to enquire about your art.`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-[#25D366] text-white font-semibold text-xs touch-target"
-          >
-            <MessageCircle className="w-4 h-4" />
-            <span>WhatsApp Artist</span>
-          </a>
-        )}
+        <button
+          onClick={() => openEnquiry()}
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-madder-red text-warm-ivory font-semibold text-xs touch-target cursor-pointer"
+        >
+          <MessageSquare className="w-4 h-4" />
+          <span>Enquire / Buy</span>
+        </button>
 
         <button
           onClick={() => setIsQRModalOpen(true)}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-madder-red text-warm-ivory font-semibold text-xs touch-target"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-paper-cream border border-terracotta/30 text-indigo-ink font-semibold text-xs touch-target cursor-pointer"
         >
-          <Share2 className="w-4 h-4" />
-          <span>Share / QR</span>
+          <Share2 className="w-4 h-4 text-madder-red" />
+          <span>Share Portfolio</span>
         </button>
       </div>
 
@@ -430,28 +450,36 @@ export const PortfolioPage: React.FC = () => {
               <div className="pt-2 flex flex-wrap items-center justify-end gap-3">
                 <button
                   onClick={() => {
+                    setSelectedArtworkForCaption(activeLightboxArtwork);
+                    setActiveLightboxArtwork(null);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-paper-cream transition"
+                >
+                  <FileText className="w-4 h-4 text-terracotta" />
+                  <span>Captions</span>
+                </button>
+
+                <button
+                  onClick={() => {
                     setSelectedArtworkForShare(activeLightboxArtwork);
                     setActiveLightboxArtwork(null);
                   }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-paper-cream transition"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-paper-cream transition"
                 >
                   <Share2 className="w-4 h-4 text-madder-red" />
-                  <span>Share Artwork Card</span>
+                  <span>Share Card</span>
                 </button>
 
-                {artist.whatsapp_number && (
-                  <a
-                    href={`https://wa.me/${artist.whatsapp_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                      `Namaskaram ${artist.name}, I am enquiring about your artwork "${activeLightboxArtwork.title}" on Kala Katha.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-xs"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Enquire via WhatsApp</span>
-                  </a>
-                )}
+                <button
+                  onClick={() => {
+                    openEnquiry(activeLightboxArtwork);
+                    setActiveLightboxArtwork(null);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-xs cursor-pointer"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Send Enquiry</span>
+                </button>
               </div>
             </div>
           </div>
@@ -467,6 +495,27 @@ export const PortfolioPage: React.FC = () => {
         />
       )}
 
+      {/* Multilingual Caption Generator Modal */}
+      {selectedArtworkForCaption && (
+        <CaptionModal
+          artwork={selectedArtworkForCaption}
+          artist={artist}
+          onClose={() => setSelectedArtworkForCaption(null)}
+        />
+      )}
+
+      {/* Public Enquiry / Commission Modal */}
+      {isEnquiryModalOpen && (
+        <EnquiryModal
+          artist={artist}
+          artwork={enquiryArtwork}
+          onClose={() => {
+            setIsEnquiryModalOpen(false);
+            setEnquiryArtwork(null);
+          }}
+        />
+      )}
+
       {/* Portfolio QR Code Modal */}
       {isQRModalOpen && (
         <div
@@ -477,7 +526,7 @@ export const PortfolioPage: React.FC = () => {
           <div className="relative max-w-sm w-full">
             <button
               onClick={() => setIsQRModalOpen(false)}
-              className="absolute -top-10 right-0 p-1.5 text-warm-ivory hover:text-white"
+              className="absolute -top-10 right-0 p-1.5 text-warm-ivory hover:text-white cursor-pointer"
               aria-label="Close QR Modal"
             >
               <X className="w-6 h-6" />

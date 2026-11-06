@@ -4,7 +4,7 @@ import { User, Palette, MessageSquare, ExternalLink } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { ProfileEditor } from '../components/dashboard/ProfileEditor';
 import { ArtworkManager } from '../components/dashboard/ArtworkManager';
-import { EmptyState } from '../components/common/EmptyState';
+import { EnquiriesInbox } from '../components/dashboard/EnquiriesInbox';
 import { CornerOrnament } from '../components/common/Motifs';
 
 type DashboardTab = 'profile' | 'artworks' | 'enquiries';
@@ -107,15 +107,7 @@ export const DashboardPage: React.FC = () => {
 
         {activeTab === 'artworks' && <ArtworkManager />}
 
-        {activeTab === 'enquiries' && (
-          <EmptyState
-            title="No Enquiries Yet"
-            description="When art patrons and curators discover your artwork cards or portfolio, their messages and commission requests will arrive here with WhatsApp and email reply shortcuts."
-            actionText="Go to Artworks Gallery"
-            onAction={() => setActiveTab('artworks')}
-            icon={<MessageSquare className="w-6 h-6" />}
-          />
-        )}
+        {activeTab === 'enquiries' && <EnquiriesInbox />}
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Share2, MessageCircle, Sparkles, MapPin } from 'lucide-react';
+import { ArrowLeft, Share2, MessageCircle, Sparkles, MapPin, MessageSquare, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { updateMetaTags } from '../lib/metaTags';
 import { EmptyState } from '../components/common/EmptyState';
 import { ArtworkShareCard } from '../components/share/ArtworkShareCard';
+import { CaptionModal } from '../components/captions/CaptionModal';
+import { EnquiryModal } from '../components/enquiries/EnquiryModal';
 import type { Artist, Artwork } from '../types/database.types';
 
 export const ArtworkDetailPage: React.FC = () => {
@@ -13,7 +15,10 @@ export const ArtworkDetailPage: React.FC = () => {
   const [artist, setArtist] = useState<Artist | null>(null);
   const [artwork, setArtwork] = useState<Artwork | null>(null);
   const [loading, setLoading] = useState(true);
+
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isCaptionModalOpen, setIsCaptionModalOpen] = useState(false);
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchArtworkAndArtist = async () => {
@@ -202,7 +207,15 @@ export const ArtworkDetailPage: React.FC = () => {
           </div>
 
           {/* Actions */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+          <div className="pt-2 flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setIsEnquiryModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-sm touch-target cursor-pointer"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Send Enquiry</span>
+            </button>
+
             {artist.whatsapp_number && (
               <a
                 href={`https://wa.me/${artist.whatsapp_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
@@ -210,19 +223,27 @@ export const ArtworkDetailPage: React.FC = () => {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-sm touch-target"
+                className="inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#25D366] text-white text-xs font-semibold hover:bg-[#20ba59] transition shadow-sm touch-target"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>Enquire via WhatsApp</span>
+                <span>WhatsApp</span>
               </a>
             )}
 
             <button
               onClick={() => setIsShareModalOpen(true)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 py-3 px-5 rounded-xl border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target"
+              className="inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target cursor-pointer"
             >
               <Share2 className="w-4 h-4 text-madder-red" />
-              <span>Share Artwork Card</span>
+              <span>Share Card</span>
+            </button>
+
+            <button
+              onClick={() => setIsCaptionModalOpen(true)}
+              className="inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-terracotta" />
+              <span>Captions</span>
             </button>
           </div>
         </div>
@@ -234,6 +255,24 @@ export const ArtworkDetailPage: React.FC = () => {
           artwork={artwork}
           artist={artist}
           onClose={() => setIsShareModalOpen(false)}
+        />
+      )}
+
+      {/* Caption Modal */}
+      {isCaptionModalOpen && (
+        <CaptionModal
+          artwork={artwork}
+          artist={artist}
+          onClose={() => setIsCaptionModalOpen(false)}
+        />
+      )}
+
+      {/* Enquiry Modal */}
+      {isEnquiryModalOpen && (
+        <EnquiryModal
+          artist={artist}
+          artwork={artwork}
+          onClose={() => setIsEnquiryModalOpen(false)}
         />
       )}
     </div>

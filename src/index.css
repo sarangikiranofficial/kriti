@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper-cream: #F6EEDC;
+  --color-warm-ivory: #FBF6EA;
+  --color-indigo-ink: #1F2A44;
+  --color-madder-red: #A63D2F;
+  --color-turmeric: #E0A526;
+  --color-terracotta: #C8683F;
+  --color-leaf-green: #4F6B3A;
+  --color-charcoal: #2B2622;
+
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Mukta", system-ui, -apple-system, sans-serif;
+  --font-ml-serif: "Noto Serif Malayalam", serif;
+  --font-ml-sans: "Noto Sans Malayalam", sans-serif;
+  --font-hi: "Noto Sans Devanagari", sans-serif;
+  --font-ta: "Noto Sans Tamil", sans-serif;
+}
+
+/* Subtle handmade paper grain texture using SVG noise filter */
+.bg-paper-grain {
+  background-color: var(--color-paper-cream);
+  background-image: radial-gradient(rgba(31, 42, 68, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Subtle block-print border trim */
+.border-blockprint {
+  border-image: repeating-linear-gradient(
+    45deg,
+    #A63D2F,
+    #A63D2F 8px,
+    #E0A526 8px,
+    #E0A526 16px,
+    #C8683F 16px,
+    #C8683F 24px
+  ) 1;
+}
+
+/* Ensure minimum touch targets for accessible mobile interactions */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Script-aware font application classes */
+:lang(ml) {
+  font-family: var(--font-ml-sans);
+}
+:lang(ml) h1, :lang(ml) h2, :lang(ml) h3, :lang(ml) .font-heading {
+  font-family: var(--font-ml-serif);
+}
+
+:lang(hi) {
+  font-family: var(--font-hi);
+}
+
+:lang(ta) {
+  font-family: var(--font-ta);
+}
+
+/* Accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

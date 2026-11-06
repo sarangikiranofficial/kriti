@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#A63D2F" />
+  <!-- Traditional geometric earthen lamp / lotus motif -->
+  <path d="M32 10C32 10 39 21 39 26C39 29.866 35.866 33 32 33C28.134 33 25 29.866 25 26C25 21 32 10 32 10Z" fill="#E0A526" />
+  <path d="M14 36C14 45 22 51 32 51C42 51 50 45 50 36C50 35 49 34 47 34H17C15 34 14 35 14 36Z" fill="#F6EEDC" />
+  <path d="M22 51L20 54H44L42 51" stroke="#F6EEDC" stroke-width="2" stroke-linecap="round" />
+  <circle cx="32" cy="24" r="2.5" fill="#FBF6EA" />
+</svg>

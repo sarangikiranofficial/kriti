@@ -1,21 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  /* Earthy Traditional Indian Art Palette */
-  --color-rice-paper: #FAF6F0;
-  --color-deep-maroon: #8B0000;
-  --color-antique-gold: #D4AF37;
-  --color-terracotta: #C8683F;
-
-  /* Harmonized surface & text tokens */
-  --color-paper-cream: #FAF6F0;
-  --color-warm-ivory: #FFFDF9;
-  --color-madder-red: #8B0000;
-  --color-turmeric: #D4AF37;
-  --color-leaf-green: #4F6B3A;
-  --color-indigo-ink: #1F2A44;
+  /* Exact Bold Editorial "Handmade India" Palette Tokens */
+  --color-oxblood: #3A1D18;
   --color-charcoal: #2B2622;
+  --color-paper: #F6EEDC;
+  --color-ivory: #FBF6EA;
+  --color-madder-red: #A63D2F;
+  --color-turmeric: #E0A526;
+  --color-terracotta: #C8683F;
+  --color-leaf-green: #4F6B3A;
+  --color-sage: #8A9A78;
+  --color-clay: #E7CDB4;
 
+  /* Aliases: replacing indigo/navy everywhere with deep oxblood/walnut #3A1D18 */
+  --color-indigo: #3A1D18;
+  --color-indigo-ink: #3A1D18;
+  --color-deep-maroon: #3A1D18;
+  --color-antique-gold: #E0A526;
+  --color-paper-cream: #F6EEDC;
+  --color-rice-paper: #F6EEDC;
+  --color-warm-ivory: #FBF6EA;
+
+  --font-display: "Rozha One", "Fraunces", Georgia, serif;
   --font-serif: "Fraunces", Georgia, serif;
   --font-sans: "Mukta", system-ui, -apple-system, sans-serif;
   --font-ml-serif: "Noto Serif Malayalam", serif;
@@ -24,32 +31,146 @@
   --font-ta: "Noto Sans Tamil", sans-serif;
 }
 
-/* Authentic handmade rice-paper texture */
-.bg-rice-paper, .bg-paper-grain {
-  background-color: var(--color-rice-paper);
+/* Global Layered Background: Paper Base + Fixed Subtle Texture */
+body {
+  background-color: var(--color-paper);
+  color: var(--color-charcoal);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url('/images/textures/paper-texture.png');
+  background-repeat: repeat;
+  background-size: 380px auto;
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+/* Background Jaali Drift Animation (transform-only, 60fps) */
+@keyframes jaali-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-35px, -20px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-jaali-drift {
+  animation: jaali-drift 75s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-jaali-drift {
+    animation: none !important;
+  }
+}
+
+/* Surface utilities */
+.bg-paper, .bg-rice-paper, .bg-paper-grain {
+  background-color: var(--color-paper);
+}
+
+.bg-ivory, .bg-warm-ivory {
+  background-color: var(--color-ivory);
+}
+
+.bg-oxblood {
+  background-color: var(--color-oxblood);
+}
+
+.bg-clay {
+  background-color: var(--color-clay);
+}
+
+.bg-sage {
+  background-color: var(--color-sage);
+}
+
+/* Stitched-edge madder button with turmeric inner border */
+.btn-stitched-madder {
+  background-color: var(--color-madder-red);
+  color: var(--color-ivory);
+  position: relative;
+  border: 1px solid var(--color-madder-red);
+  box-shadow: inset 0 0 0 1.5px rgba(224, 165, 38, 0.75);
+  transition: all 0.2s ease-in-out;
+}
+.btn-stitched-madder:hover {
+  background-color: #8E3427;
+  box-shadow: inset 0 0 0 1.5px rgba(224, 165, 38, 0.95), 0 3px 10px rgba(58, 29, 24, 0.3);
+}
+
+/* Warm heritage input with turmeric focus ring */
+.input-heritage {
+  background-color: var(--color-ivory);
+  border: 1px solid rgba(200, 104, 63, 0.35);
+  color: var(--color-charcoal);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-heritage:focus {
+  outline: none;
+  border-color: var(--color-turmeric);
+  box-shadow: 0 0 0 2px rgba(224, 165, 38, 0.35);
+}
+
+/* Mat-style image frame */
+.frame-mat {
+  background-color: var(--color-ivory);
+  padding: 6px;
+  border: 1px solid rgba(231, 205, 180, 0.7);
+  box-shadow: 0 3px 12px rgba(58, 29, 24, 0.08);
+}
+
+/* Faint handloom weave pattern for empty states */
+.bg-weave-pattern {
+  background-color: var(--color-ivory);
   background-image: 
-    radial-gradient(rgba(139, 0, 0, 0.025) 1px, transparent 0),
-    radial-gradient(rgba(212, 175, 55, 0.035) 1px, transparent 0);
-  background-size: 24px 24px, 36px 36px;
-  background-position: 0 0, 12px 12px;
+    repeating-linear-gradient(45deg, rgba(200, 104, 63, 0.035) 0, rgba(200, 104, 63, 0.035) 2px, transparent 0, transparent 8px),
+    repeating-linear-gradient(-45deg, rgba(58, 29, 24, 0.035) 0, rgba(58, 29, 24, 0.035) 2px, transparent 0, transparent 8px);
 }
 
-/* Traditional Indian block-print border trim in deep maroon and antique gold */
-.border-blockprint {
-  border-image: repeating-linear-gradient(
-    45deg,
-    #8B0000,
-    #8B0000 8px,
-    #D4AF37 8px,
-    #D4AF37 16px,
-    #C8683F 16px,
-    #C8683F 24px
-  ) 1;
+/* Marquee and Stamp Animations for Editorial Landing Page */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
-/* Subtle gold metallic shimmer border */
-.border-gold-accent {
-  border-color: rgba(212, 175, 55, 0.35);
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes stamp-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-stamp-spin {
+  animation: stamp-spin 28s linear infinite;
 }
 
 /* Ensure minimum touch targets for accessible mobile interactions */

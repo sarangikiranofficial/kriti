@@ -109,7 +109,7 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
     <div className="bg-warm-ivory border border-terracotta/30 rounded-2xl p-6 text-center shadow-xs">
       <div className="flex items-center justify-center gap-2 mb-3 text-madder-red">
         <QrIcon className="w-5 h-5" />
-        <h3 className="font-serif text-lg font-bold text-indigo-ink">
+        <h3 className="font-serif text-lg font-bold text-oxblood">
           Scan &amp; Share Portfolio
         </h3>
       </div>
@@ -123,7 +123,7 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
       </div>
 
       <div className="mb-4">
-        <div className="font-serif font-bold text-base text-indigo-ink">
+        <div className="font-serif font-bold text-base text-oxblood">
           {artistName}
         </div>
         <div className="text-xs text-terracotta font-medium">
@@ -135,7 +135,7 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
       <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
         <button
           onClick={handleCopyLink}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-terracotta/30 text-xs font-semibold text-indigo-ink hover:bg-paper-cream transition touch-target"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-terracotta/30 text-xs font-semibold text-oxblood hover:bg-paper-cream transition touch-target"
         >
           {copied ? <Check className="w-4 h-4 text-leaf-green" /> : <Copy className="w-4 h-4" />}
           <span>{copied ? 'Link Copied!' : 'Copy Link'}</span>
@@ -143,9 +143,9 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
 
         <button
           onClick={handleDownloadQR}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-xs touch-target"
+          className="btn-stitched-madder w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wide shadow-xs touch-target cursor-pointer"
         >
-          <Download className="w-4 h-4" />
+          <Download className="w-4 h-4 text-turmeric" />
           <span>Download QR (PNG)</span>
         </button>
       </div>

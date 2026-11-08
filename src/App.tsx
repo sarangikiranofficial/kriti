@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './components/common/Toast';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
+import { BackgroundJaali } from './components/common/BackgroundJaali';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -15,7 +16,8 @@ export function App() {
     <BrowserRouter>
       <ToastProvider>
         <AuthProvider>
-          <div className="flex flex-col min-h-screen bg-paper-cream text-charcoal font-sans">
+          <div className="flex flex-col min-h-screen bg-paper text-charcoal font-sans relative">
+            <BackgroundJaali />
             <Navbar />
             <main className="flex-1">
               <Routes>

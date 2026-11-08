@@ -76,7 +76,7 @@ export const EnquiriesInbox: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between pb-2 border-b border-terracotta/20">
         <div>
-          <h2 className="font-serif text-xl sm:text-2xl font-bold text-indigo-ink">
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-oxblood">
             Patron Enquiries &amp; Commissions
           </h2>
           <p className="text-xs text-charcoal/70 mt-0.5">
@@ -116,7 +116,7 @@ export const EnquiriesInbox: React.FC = () => {
                       enquiry.status === 'unread' ? 'bg-madder-red animate-pulse' : 'bg-charcoal/30'
                     }`}
                   />
-                  <h3 className="font-serif text-base font-bold text-indigo-ink">
+                  <h3 className="font-serif text-base font-bold text-oxblood">
                     {enquiry.sender_name}
                   </h3>
                   <span className="text-[11px] font-semibold text-terracotta bg-warm-ivory px-2 py-0.5 rounded border border-terracotta/20">
@@ -143,7 +143,7 @@ export const EnquiriesInbox: React.FC = () => {
               {/* Contact & Reply Shortcuts */}
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs pt-2 border-t border-terracotta/15">
                 <div className="flex items-center gap-2 text-charcoal/80">
-                  <span className="font-semibold text-indigo-ink">Contact:</span>
+                  <span className="font-semibold text-oxblood">Contact:</span>
                   <span className="font-mono bg-paper-cream px-2 py-0.5 rounded border border-terracotta/20">
                     {enquiry.sender_contact}
                   </span>
@@ -179,7 +179,7 @@ export const EnquiriesInbox: React.FC = () => {
                   {/* Toggle Read/Unread */}
                   <button
                     onClick={() => handleToggleStatus(enquiry.id, enquiry.status)}
-                    className="p-1.5 rounded-lg border border-terracotta/30 text-charcoal/70 hover:text-indigo-ink hover:bg-paper-cream transition"
+                    className="p-1.5 rounded-lg border border-terracotta/30 text-charcoal/70 hover:text-oxblood hover:bg-paper-cream transition"
                     title={enquiry.status === 'unread' ? 'Mark as Read' : 'Mark as Unread'}
                   >
                     <CheckCircle className={`w-4 h-4 ${enquiry.status === 'read' ? 'text-leaf-green' : ''}`} />

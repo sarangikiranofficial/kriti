@@ -20,7 +20,7 @@ export const AboutPage: React.FC = () => {
         <span className="text-xs uppercase tracking-widest font-semibold text-terracotta">
           Philosophy &amp; Cultural Charter
         </span>
-        <h1 className="font-serif text-3xl sm:text-5xl font-bold text-deep-maroon mt-2">
+        <h1 className="font-display text-3xl sm:text-5xl font-normal text-oxblood mt-2">
           About {APP_CONFIG.name} (कृति)
         </h1>
         <p className="text-charcoal/80 text-sm sm:text-base mt-3 max-w-xl mx-auto leading-relaxed">
@@ -33,7 +33,7 @@ export const AboutPage: React.FC = () => {
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.6 }}
           className="bg-warm-ivory border border-antique-gold/30 rounded-2xl p-6 sm:p-8 relative shadow-xs"
         >
@@ -41,11 +41,11 @@ export const AboutPage: React.FC = () => {
           <CornerOrnament className="absolute bottom-2 right-2 w-5 h-5 rotate-180 opacity-40" />
 
           <div className="flex items-start gap-4">
-            <div className="p-3 rounded-xl bg-rice-paper text-deep-maroon border border-antique-gold/30 flex-shrink-0">
-              <BookOpen className="w-6 h-6 text-deep-maroon" />
+            <div className="p-3 rounded-xl bg-rice-paper text-oxblood border border-antique-gold/30 flex-shrink-0">
+              <BookOpen className="w-6 h-6 text-oxblood" />
             </div>
             <div>
-              <h2 className="font-serif text-2xl font-bold text-deep-maroon mb-2">
+              <h2 className="font-serif text-2xl font-bold text-oxblood mb-2">
                 From Craft to Click: The Mission of Kriti
               </h2>
               <p className="text-charcoal/80 text-sm leading-relaxed">
@@ -60,13 +60,13 @@ export const AboutPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-warm-ivory border border-antique-gold/25 rounded-xl p-6 shadow-xs hover:border-deep-maroon/30 transition-colors"
+            className="bg-ivory border border-turmeric/35 rounded-xl p-6 shadow-xs hover:border-oxblood/30 transition-colors"
           >
-            <div className="flex items-center gap-3 mb-3 text-deep-maroon">
-              <Scale className="w-5 h-5 text-deep-maroon" />
-              <h3 className="font-serif text-lg font-bold text-deep-maroon">
+            <div className="flex items-center gap-3 mb-3 text-oxblood">
+              <Scale className="w-5 h-5 text-oxblood" />
+              <h3 className="font-serif text-lg font-bold text-oxblood">
                 100% Artisan Ownership
               </h3>
             </div>
@@ -78,13 +78,13 @@ export const AboutPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-warm-ivory border border-antique-gold/25 rounded-xl p-6 shadow-xs hover:border-deep-maroon/30 transition-colors"
+            className="bg-ivory border border-turmeric/35 rounded-xl p-6 shadow-xs hover:border-oxblood/30 transition-colors"
           >
             <div className="flex items-center gap-3 mb-3 text-leaf-green">
               <ShieldCheck className="w-5 h-5" />
-              <h3 className="font-serif text-lg font-bold text-deep-maroon">
+              <h3 className="font-serif text-lg font-bold text-oxblood">
                 No AI Alteration of Sacred Iconography
               </h3>
             </div>
@@ -96,13 +96,13 @@ export const AboutPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-warm-ivory border border-antique-gold/25 rounded-xl p-6 shadow-xs hover:border-deep-maroon/30 transition-colors"
+            className="bg-ivory border border-turmeric/35 rounded-xl p-6 shadow-xs hover:border-oxblood/30 transition-colors"
           >
             <div className="flex items-center gap-3 mb-3 text-terracotta">
               <HeartHandshake className="w-5 h-5" />
-              <h3 className="font-serif text-lg font-bold text-deep-maroon">
+              <h3 className="font-serif text-lg font-bold text-oxblood">
                 Direct Connection &amp; Fair Trade
               </h3>
             </div>
@@ -114,13 +114,13 @@ export const AboutPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-warm-ivory border border-antique-gold/25 rounded-xl p-6 shadow-xs hover:border-deep-maroon/30 transition-colors"
+            className="bg-ivory border border-turmeric/35 rounded-xl p-6 shadow-xs hover:border-oxblood/30 transition-colors"
           >
             <div className="flex items-center gap-3 mb-3 text-antique-gold">
               <Sparkles className="w-5 h-5 text-antique-gold" />
-              <h3 className="font-serif text-lg font-bold text-deep-maroon">
+              <h3 className="font-serif text-lg font-bold text-oxblood">
                 Mother Tongue Inclusion
               </h3>
             </div>
@@ -135,7 +135,7 @@ export const AboutPage: React.FC = () => {
         <div className="text-center text-xs text-charcoal/70 bg-rice-paper p-4 rounded-xl border border-antique-gold/25">
           <p>
             Have questions or want to partner with grassroots craft clusters? Reach out to us at{' '}
-            <a href={`mailto:${APP_CONFIG.contactEmail}`} className="text-deep-maroon underline font-semibold">
+            <a href={`mailto:${APP_CONFIG.contactEmail}`} className="text-oxblood underline font-semibold">
               {APP_CONFIG.contactEmail}
             </a>
           </p>

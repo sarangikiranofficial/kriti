@@ -3,13 +3,13 @@ import { Send, X, ShieldCheck, CheckCircle2, MessageSquare } from 'lucide-react'
 import { supabase } from '../../lib/supabase';
 import { useToast } from '../common/Toast';
 import type { Artist, Artwork, EnquiryType } from '../../types/database.types';
-
+ 
 interface EnquiryModalProps {
   artist: Artist;
   artwork?: Artwork | null;
   onClose: () => void;
 }
-
+ 
 export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   artist,
   artwork,
@@ -19,37 +19,33 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   const [senderContact, setSenderContact] = useState('');
   const [enquiryType, setEnquiryType] = useState<EnquiryType>(artwork ? 'Buy' : 'Commission');
   const [budget, setBudget] = useState('');
-  const [message, setMessage] = useState(
-    artwork
-      ? `Namaskaram ${artist.name}, I am interested in acquiring your artwork "${artwork.title}". Could you please provide more details?`
-      : `Namaskaram ${artist.name}, I would like to discuss a custom commission in your traditional ${artist.art_form} style.`
-  );
-
+  const [message, setMessage] = useState('');
+ 
   // Honeypot field for spam bots (must remain empty)
   const [honeypot, setHoneypot] = useState('');
-
+ 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { showToast } = useToast();
-
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+ 
     // Honeypot verification: if bot filled this field, silently pretend success
     if (honeypot) {
       console.warn('Bot submission blocked via honeypot field.');
       setSubmitted(true);
       return;
     }
-
+ 
     if (!senderName.trim() || !senderContact.trim() || !message.trim()) {
       showToast('Please fill in your name, contact details, and message.', 'error');
       return;
     }
-
+ 
     try {
       setIsSubmitting(true);
-
+ 
       const payload = {
         artist_id: artist.id,
         artwork_id: artwork ? artwork.id : null,
@@ -60,10 +56,10 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
         message: message.trim(),
         status: 'unread',
       };
-
+ 
       const { error } = await supabase.from('enquiries').insert(payload);
       if (error) throw error;
-
+ 
       setSubmitted(true);
       showToast('Enquiry sent directly to artist!', 'success');
     } catch (err: any) {
@@ -72,14 +68,14 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
       setIsSubmitting(false);
     }
   };
-
+ 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-indigo-ink/65 backdrop-blur-xs overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-oxblood/65 backdrop-blur-xs overflow-y-auto"
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative bg-warm-ivory border border-terracotta/30 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl my-8">
+      <div className="relative bg-warm-ivory border border-terracotta/30 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl my-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1.5 rounded-full text-charcoal/60 hover:text-charcoal hover:bg-paper-cream transition"
@@ -87,17 +83,17 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
         >
           <X className="w-5 h-5" />
         </button>
-
+ 
         {submitted ? (
           <div className="text-center py-8 space-y-4">
             <div className="w-16 h-16 mx-auto rounded-full bg-leaf-green/15 text-leaf-green flex items-center justify-center">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="font-serif text-2xl font-bold text-indigo-ink">
+            <h3 className="font-serif text-2xl font-bold text-oxblood">
               Enquiry Received
             </h3>
             <p className="text-sm text-charcoal/80 leading-relaxed max-w-sm mx-auto">
-              Your message has been delivered directly to <strong className="text-indigo-ink">{artist.name}</strong>. The artist will reach out via your provided contact details.
+              Your message has been delivered directly to <strong className="text-oxblood">{artist.name}</strong>. The artist will reach out via your provided contact details.
             </p>
             <div className="pt-4">
               <button
@@ -112,7 +108,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
           <div>
             <div className="flex items-center gap-2 mb-1 text-madder-red">
               <MessageSquare className="w-5 h-5" />
-              <h3 className="font-serif text-xl sm:text-2xl font-bold text-indigo-ink">
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-oxblood">
                 Connect with {artist.name}
               </h3>
             </div>
@@ -121,7 +117,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                 ? `Enquiring regarding "${artwork.title}" (${artist.art_form})`
                 : `Commission or collaboration enquiry for traditional ${artist.art_form}`}
             </p>
-
+ 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Spam Honeypot Field (Hidden from real human users) */}
               <div className="hidden" aria-hidden="true">
@@ -135,11 +131,11 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                   onChange={(e) => setHoneypot(e.target.value)}
                 />
               </div>
-
+ 
               {/* Name & Contact */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Your Name <span className="text-madder-red">*</span>
                   </label>
                   <input
@@ -151,9 +147,9 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                     className="w-full px-3 py-2 rounded-lg border border-terracotta/30 bg-paper-cream text-sm text-charcoal focus:bg-warm-ivory focus:ring-2 focus:ring-madder-red outline-none"
                   />
                 </div>
-
+ 
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Email or Phone <span className="text-madder-red">*</span>
                   </label>
                   <input
@@ -166,11 +162,11 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                   />
                 </div>
               </div>
-
+ 
               {/* Enquiry Type & Budget */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Enquiry Purpose
                   </label>
                   <select
@@ -184,9 +180,9 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                     <option value="Workshop">Craft Workshop</option>
                   </select>
                 </div>
-
+ 
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Estimated Budget (Optional)
                   </label>
                   <input
@@ -198,10 +194,10 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                   />
                 </div>
               </div>
-
+ 
               {/* Message */}
               <div>
-                <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                <label className="block text-xs font-semibold text-oxblood mb-1">
                   Message to Artist <span className="text-madder-red">*</span>
                 </label>
                 <textarea
@@ -209,18 +205,22 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Share details of what you have in mind..."
+                  placeholder={
+                    artwork
+                      ? `Tell ${artist.name} what you would like to know about "${artwork.title}"...`
+                      : 'Share details of what you have in mind...'
+                  }
                   className="w-full px-3 py-2 rounded-lg border border-terracotta/30 bg-paper-cream text-sm text-charcoal focus:bg-warm-ivory focus:ring-2 focus:ring-madder-red outline-none leading-relaxed"
                 />
               </div>
-
+ 
               <div className="flex items-center gap-2 text-[11px] text-charcoal/70 bg-paper-cream p-2.5 rounded-lg border border-terracotta/15">
                 <ShieldCheck className="w-4 h-4 text-leaf-green flex-shrink-0" />
                 <span>
                   Direct fair trade: 100% of proceeds go to the traditional artist. No platform commission.
                 </span>
               </div>
-
+ 
               {/* Submit Buttons */}
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button
@@ -233,9 +233,9 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-sm touch-target disabled:opacity-50 cursor-pointer"
+                  className="btn-stitched-madder inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide shadow-sm touch-target disabled:opacity-50 cursor-pointer"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-3.5 h-3.5 text-turmeric" />
                   <span>{isSubmitting ? 'Sending...' : 'Send Direct Enquiry'}</span>
                 </button>
               </div>

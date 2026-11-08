@@ -7,18 +7,18 @@ import { compressImage } from '../../lib/imageCompressor';
 import { EmptyState } from '../common/EmptyState';
 import { VoiceInput, ARTWORK_GUIDED_PROMPTS } from '../voice/VoiceInput';
 import type { Artwork, AvailabilityStatus } from '../../types/database.types';
-
+ 
 export const ArtworkManager: React.FC = () => {
   const { user, artist } = useAuth();
   const { showToast } = useToast();
-
+ 
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [loading, setLoading] = useState(true);
-
+ 
   // Modal & Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingArtwork, setEditingArtwork] = useState<Artwork | null>(null);
-
+ 
   const [title, setTitle] = useState('');
   const [titleRegional, setTitleRegional] = useState('');
   const [medium, setMedium] = useState('');
@@ -31,10 +31,10 @@ export const ArtworkManager: React.FC = () => {
   const [imageAlt, setImageAlt] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [ownershipDeclared, setOwnershipDeclared] = useState(false);
-
+ 
   const [isCompressing, setIsCompressing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+ 
   const fetchArtworks = async () => {
     if (!user) return;
     try {
@@ -44,7 +44,7 @@ export const ArtworkManager: React.FC = () => {
         .select('*')
         .eq('artist_id', user.id)
         .order('created_at', { ascending: false });
-
+ 
       if (error) throw error;
       setArtworks((data as Artwork[]) || []);
     } catch (err: any) {
@@ -53,11 +53,11 @@ export const ArtworkManager: React.FC = () => {
       setLoading(false);
     }
   };
-
+ 
   useEffect(() => {
     fetchArtworks();
   }, [user]);
-
+ 
   const resetForm = () => {
     setEditingArtwork(null);
     setTitle('');
@@ -73,7 +73,7 @@ export const ArtworkManager: React.FC = () => {
     setImageUrl('');
     setOwnershipDeclared(false);
   };
-
+ 
   const openAddModal = () => {
     if (!artist) {
       showToast('Please save your artist profile first before adding artworks.', 'error');
@@ -82,7 +82,7 @@ export const ArtworkManager: React.FC = () => {
     resetForm();
     setIsModalOpen(true);
   };
-
+ 
   const openEditModal = (artwork: Artwork) => {
     setEditingArtwork(artwork);
     setTitle(artwork.title);
@@ -99,26 +99,26 @@ export const ArtworkManager: React.FC = () => {
     setOwnershipDeclared(artwork.ownership_declared);
     setIsModalOpen(true);
   };
-
+ 
   const handleImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
-
+ 
     try {
       setIsCompressing(true);
       const compressed = await compressImage(file, 1600, 0.85);
-
+ 
       const filePath = `${user.id}/artworks/${Date.now()}-${compressed.file.name}`;
       const { error: uploadError } = await supabase.storage
         .from('artworks')
         .upload(filePath, compressed.file, { upsert: true });
-
+ 
       if (uploadError) throw uploadError;
-
+ 
       const { data: publicUrlData } = supabase.storage
         .from('artworks')
         .getPublicUrl(filePath);
-
+ 
       setImageUrl(publicUrlData.publicUrl);
       if (!imageAlt) {
         setImageAlt(file.name.replace(/\.[^/.]+$/, ''));
@@ -130,40 +130,40 @@ export const ArtworkManager: React.FC = () => {
       setIsCompressing(false);
     }
   };
-
+ 
   const handleDelete = async (artworkId: string) => {
     if (!window.confirm('Are you sure you want to delete this artwork? This action cannot be undone.')) {
       return;
     }
-
+ 
     try {
       const { error } = await supabase.from('artworks').delete().eq('id', artworkId);
       if (error) throw error;
-
+ 
       setArtworks((prev) => prev.filter((a) => a.id !== artworkId));
       showToast('Artwork removed.', 'info');
     } catch (err: any) {
       showToast(err.message || 'Failed to delete artwork.', 'error');
     }
   };
-
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
-
+ 
     if (!imageUrl) {
       showToast('Please upload an artwork image.', 'error');
       return;
     }
-
+ 
     if (!ownershipDeclared) {
       showToast('You must declare ownership or authorization to share this artwork.', 'error');
       return;
     }
-
+ 
     try {
       setIsSubmitting(true);
-
+ 
       const payload = {
         artist_id: user.id,
         title: title.trim(),
@@ -180,13 +180,13 @@ export const ArtworkManager: React.FC = () => {
         ownership_declared: true,
         updated_at: new Date().toISOString(),
       };
-
+ 
       if (editingArtwork) {
         const { error } = await supabase
           .from('artworks')
           .update(payload)
           .eq('id', editingArtwork.id);
-
+ 
         if (error) throw error;
         showToast('Artwork updated successfully!', 'success');
       } else {
@@ -194,7 +194,7 @@ export const ArtworkManager: React.FC = () => {
         if (error) throw error;
         showToast('Artwork added to your gallery!', 'success');
       }
-
+ 
       setIsModalOpen(false);
       resetForm();
       await fetchArtworks();
@@ -204,28 +204,28 @@ export const ArtworkManager: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-
+ 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-serif text-xl sm:text-2xl font-bold text-indigo-ink">
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-oxblood">
             Artwork Gallery
           </h2>
           <p className="text-xs sm:text-sm text-charcoal/70">
             Manage your artworks, stories, and cultural contexts.
           </p>
         </div>
-
+ 
         <button
           onClick={openAddModal}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-madder-red text-warm-ivory font-medium hover:bg-madder-red/90 transition shadow-sm touch-target cursor-pointer"
+          className="btn-stitched-madder inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide shadow-sm touch-target cursor-pointer"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 text-turmeric" />
           <span>Add Artwork</span>
         </button>
       </div>
-
+ 
       {loading ? (
         <div className="py-12 text-center text-charcoal/60 text-sm">
           Loading gallery...
@@ -258,16 +258,16 @@ export const ArtworkManager: React.FC = () => {
                       ? 'bg-leaf-green/90 text-white'
                       : art.availability === 'sold'
                       ? 'bg-charcoal/80 text-white'
-                      : 'bg-turmeric/90 text-indigo-ink'
+                      : 'bg-turmeric/90 text-oxblood'
                   }`}
                 >
                   {art.availability}
                 </span>
               </div>
-
+ 
               <div className="p-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-lg font-bold text-indigo-ink">
+                  <h3 className="font-serif text-lg font-bold text-oxblood">
                     {art.title}
                   </h3>
                   {art.title_regional && (
@@ -282,14 +282,14 @@ export const ArtworkManager: React.FC = () => {
                     "{art.cultural_context}"
                   </p>
                 </div>
-
+ 
                 <div className="pt-4 mt-3 border-t border-terracotta/15 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-indigo-ink">
+                  <span className="font-semibold text-oxblood">
                     {art.is_price_on_request || art.price === null
                       ? 'Price on Request'
                       : `₹${art.price.toLocaleString('en-IN')}`}
                   </span>
-
+ 
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => openEditModal(art)}
@@ -314,26 +314,26 @@ export const ArtworkManager: React.FC = () => {
           ))}
         </div>
       )}
-
+ 
       {/* Add / Edit Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-indigo-ink/60 backdrop-blur-xs overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-oxblood/60 backdrop-blur-xs overflow-y-auto"
           role="dialog"
           aria-modal="true"
         >
-          <div className="bg-warm-ivory border border-terracotta/30 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-xl max-h-[90vh] overflow-y-auto my-8">
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-indigo-ink mb-1">
+          <div className="bg-warm-ivory border border-terracotta/30 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-xl max-h-[90vh] overflow-y-auto my-auto">
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-oxblood mb-1">
               {editingArtwork ? 'Edit Artwork' : 'Add New Artwork'}
             </h3>
             <p className="text-xs text-charcoal/70 mb-6">
               Share the physical details and cultural significance of your creation.
             </p>
-
+ 
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Image Upload */}
               <div>
-                <label className="block text-xs font-semibold text-indigo-ink mb-1.5">
+                <label className="block text-xs font-semibold text-oxblood mb-1.5">
                   Artwork Photo <span className="text-madder-red">*</span>
                 </label>
                 <div className="flex flex-col sm:flex-row items-center gap-4 p-4 border-2 border-dashed border-terracotta/30 rounded-xl bg-paper-cream">
@@ -370,11 +370,11 @@ export const ArtworkManager: React.FC = () => {
                   </div>
                 </div>
               </div>
-
+ 
               {/* Title & Regional Title */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Artwork Title <span className="text-madder-red">*</span>
                   </label>
                   <input
@@ -387,7 +387,7 @@ export const ArtworkManager: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Title in Regional Script (Optional)
                   </label>
                   <input
@@ -399,11 +399,11 @@ export const ArtworkManager: React.FC = () => {
                   />
                 </div>
               </div>
-
+ 
               {/* Medium & Dimensions */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Medium / Materials <span className="text-madder-red">*</span>
                   </label>
                   <input
@@ -416,7 +416,7 @@ export const ArtworkManager: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Dimensions (Optional)
                   </label>
                   <input
@@ -428,11 +428,11 @@ export const ArtworkManager: React.FC = () => {
                   />
                 </div>
               </div>
-
+ 
               {/* Year, Price & Availability */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Year of Creation (Optional)
                   </label>
                   <input
@@ -443,9 +443,9 @@ export const ArtworkManager: React.FC = () => {
                     className="w-full px-3 py-2 rounded-lg border border-terracotta/30 bg-warm-ivory text-sm text-charcoal focus:ring-2 focus:ring-madder-red outline-none"
                   />
                 </div>
-
+ 
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Price (INR)
                   </label>
                   <input
@@ -466,9 +466,9 @@ export const ArtworkManager: React.FC = () => {
                     <span className="text-[11px] text-charcoal/70">Price on Request</span>
                   </label>
                 </div>
-
+ 
                 <div>
-                  <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                  <label className="block text-xs font-semibold text-oxblood mb-1">
                     Availability Status
                   </label>
                   <select
@@ -483,13 +483,13 @@ export const ArtworkManager: React.FC = () => {
                   </select>
                 </div>
               </div>
-
+ 
               {/* Cultural Context / Story with Voice & Guided Prompts */}
               <div>
-                <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                <label className="block text-xs font-semibold text-oxblood mb-1">
                   Cultural Context &amp; Story Behind This Piece <span className="text-madder-red">*</span>
                 </label>
-
+ 
                 {/* Voice Input with 3 Guided Prompts */}
                 <VoiceInput
                   fieldLabel="Cultural context"
@@ -497,7 +497,7 @@ export const ArtworkManager: React.FC = () => {
                   currentValue={culturalContext}
                   onTranscript={(text) => setCulturalContext(text)}
                 />
-
+ 
                 <textarea
                   rows={5}
                   required
@@ -510,10 +510,10 @@ export const ArtworkManager: React.FC = () => {
                   You can use the voice prompts above to speak in your native tongue, and edit with keyboard at any time.
                 </span>
               </div>
-
+ 
               {/* Image Alt Text for Accessibility */}
               <div>
-                <label className="block text-xs font-semibold text-indigo-ink mb-1">
+                <label className="block text-xs font-semibold text-oxblood mb-1">
                   Image Description for Accessibility (Alt Text) <span className="text-madder-red">*</span>
                 </label>
                 <input
@@ -525,7 +525,7 @@ export const ArtworkManager: React.FC = () => {
                   className="w-full px-3 py-2 rounded-lg border border-terracotta/30 bg-warm-ivory text-sm text-charcoal focus:ring-2 focus:ring-madder-red outline-none"
                 />
               </div>
-
+ 
               {/* Mandatory Ethics / Ownership Declaration Checkbox */}
               <div className="p-3.5 bg-paper-cream border border-terracotta/30 rounded-lg">
                 <label className="flex items-start gap-2.5 cursor-pointer">
@@ -541,7 +541,7 @@ export const ArtworkManager: React.FC = () => {
                   </span>
                 </label>
               </div>
-
+ 
               {/* Modal Actions */}
               <div className="flex items-center justify-end gap-3 pt-3">
                 <button

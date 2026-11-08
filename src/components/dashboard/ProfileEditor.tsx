@@ -145,7 +145,7 @@ export const ProfileEditor: React.FC = () => {
             <span className="text-xs uppercase tracking-wider font-semibold text-terracotta block">
               Your Public Portfolio Link
             </span>
-            <span className="text-sm font-mono text-indigo-ink font-medium">
+            <span className="text-sm font-mono text-oxblood font-medium">
               /a/{artist.slug}
             </span>
           </div>
@@ -187,7 +187,7 @@ export const ProfileEditor: React.FC = () => {
           </label>
         </div>
         <div className="text-center sm:text-left">
-          <h3 className="font-serif text-lg font-bold text-indigo-ink">
+          <h3 className="font-serif text-lg font-bold text-oxblood">
             Artist Portrait / Studio Photo
           </h3>
           <p className="text-xs text-charcoal/70 mt-1 max-w-md">
@@ -204,7 +204,7 @@ export const ProfileEditor: React.FC = () => {
       {/* Primary Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
+          <label className="block text-sm font-semibold text-oxblood mb-1.5">
             Full Name <span className="text-madder-red">*</span>
           </label>
           <input
@@ -218,7 +218,7 @@ export const ProfileEditor: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
+          <label className="block text-sm font-semibold text-oxblood mb-1.5">
             Name in Regional Script (Optional)
           </label>
           <input
@@ -237,7 +237,7 @@ export const ProfileEditor: React.FC = () => {
       {/* Art Form & Location */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
-          <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
+          <label className="block text-sm font-semibold text-oxblood mb-1.5">
             Art Form / Tradition <span className="text-madder-red">*</span>
           </label>
           <input
@@ -251,7 +251,7 @@ export const ProfileEditor: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
+          <label className="block text-sm font-semibold text-oxblood mb-1.5">
             State <span className="text-madder-red">*</span>
           </label>
           <select
@@ -268,7 +268,7 @@ export const ProfileEditor: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
+          <label className="block text-sm font-semibold text-oxblood mb-1.5">
             District / Village (Optional)
           </label>
           <input
@@ -283,7 +283,7 @@ export const ProfileEditor: React.FC = () => {
 
       {/* Biography with Voice Input */}
       <div>
-        <label className="block text-sm font-semibold text-indigo-ink mb-1.5">
+        <label className="block text-sm font-semibold text-oxblood mb-1.5">
           Artist Biography &amp; Heritage <span className="text-madder-red">*</span>
         </label>
         
@@ -302,14 +302,27 @@ export const ProfileEditor: React.FC = () => {
           placeholder="Tell visitors about your journey, gurus, lineage, and passion for traditional art..."
           className="w-full px-3.5 py-2.5 rounded-lg border border-terracotta/30 bg-warm-ivory focus:ring-2 focus:ring-madder-red outline-none text-sm text-charcoal leading-relaxed"
         />
-        <span className="text-[11px] text-charcoal/60 mt-1 block">
-          Speak in your mother tongue using the microphone above, or type directly into the box.
-        </span>
+        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-charcoal/70">
+          <span>Speak in your mother tongue using the microphone above, or type directly into the box.</span>
+          <button
+            type="button"
+            onClick={() => {
+              if (bio.includes('[Sample profile]')) {
+                setBio(bio.replace('[Sample profile] ', '').replace('[Sample profile]', '').trim());
+              } else {
+                setBio(`[Sample profile] ${bio}`.trim());
+              }
+            }}
+            className="inline-flex items-center gap-1 text-oxblood hover:underline font-semibold cursor-pointer self-start sm:self-auto"
+          >
+            <span>{bio.includes('[Sample profile]') ? '✓ Marked as Sample Profile' : '+ Mark as Sample Profile (Demo)'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Languages Spoken */}
       <div>
-        <label className="block text-sm font-semibold text-indigo-ink mb-2">
+        <label className="block text-sm font-semibold text-oxblood mb-2">
           Languages Spoken / Understood
         </label>
         <div className="flex flex-wrap gap-2">
@@ -335,7 +348,7 @@ export const ProfileEditor: React.FC = () => {
 
       {/* Contact & Social Information */}
       <div className="p-6 bg-warm-ivory border border-terracotta/20 rounded-xl space-y-4">
-        <h4 className="font-serif text-base font-bold text-indigo-ink flex items-center gap-2">
+        <h4 className="font-serif text-base font-bold text-oxblood flex items-center gap-2">
           <Phone className="w-4 h-4 text-madder-red" />
           <span>Contact &amp; Enquiry Channels</span>
         </h4>

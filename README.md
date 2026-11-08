@@ -1,89 +1,99 @@
 # Kriti (कृति) — From Craft to Click
 
-A mobile-first, lightweight web application empowering traditional Indian folk, tribal, and classical artisans to build professional digital portfolios, preserve the living cultural context behind their work, and connect directly with global art patrons.
+A mobile-first, lightweight web application empowering traditional Indian folk, tribal, and classical artisans to build professional digital portfolios, preserve the living cultural context behind their work, and connect directly with global patrons without complex digital skills.
 
-Built for the **ART//CODE Hackathon** | Problem Statement: *"From Craft to Click – Artist Visibility"*.
+Built for the **ART//CODE Hackathon** (03–08 November 2026) | Problem Statement: *"From Craft to Click – Artist Visibility"*.
+
+---
+
+### Project Links & Submission Deliverables
+- **Live Application URL**: `[Insert Vercel / Deployed App URL here]`
+- **Demo Video (3–5 mins)**: `[Insert YouTube or Google Drive Video URL here]`
+- **Google Drive Submission Folder**: `[Insert Google Drive folder link containing Video MP4, Presentation PDF, and Assets here]`
+- **GitHub Repository**: `[Insert Public GitHub Repository URL here]`
 
 ---
 
 ## 1. Project Overview
 
-**Kriti** (from Sanskrit *कृति*, meaning a consecrated creation, work of art, or masterwork) is an authentic, dignified digital platform created for grassroots Indian craftspeople—masters of Madhubani, Warli, Kerala Mural, Pattachitra, Gond, Kalamkari, Tanjore, and other generational craft traditions.
+**Kriti** (from Sanskrit *कृति*, meaning a consecrated creation, work of art, or masterwork) is an authentic, dignified digital platform created for grassroots Indian craftspeople—masters of Madhubani, Warli, Kerala Mural, Pattachitra, Gond, Kalamkari, Tanjore, and other generational craft lineages.
 
-Unlike conventional e-commerce marketplaces that strip away cultural significance and turn sacred art into commercial commodities, Kriti ensures that **cultural context travels with every share**. It provides voice-driven onboarding in regional languages, client-side image compression for low-bandwidth rural connections, downloadable mounted-print share cards, multilingual social caption templates, printable exhibition stall QR codes, and direct buyer/commission enquiries with zero middlemen or commission fees.
+Unlike conventional e-commerce marketplaces that commodify sacred and traditional arts and extract heavy fees, Kriti ensures that **cultural context travels with every share**. It provides voice-driven storytelling in regional mother tongues (Malayalam, Hindi, Tamil), client-side image compression for low-bandwidth rural connections, downloadable mounted-print share cards, bilingual social caption templates, printable exhibition stall QR codes, and direct buyer/commission enquiries with zero middlemen or commission fees.
 
-Strict quality standard: **Zero fake or hardcoded data**. All artists, artworks, cultural narratives, and enquiries are rendered dynamically from real Supabase Postgres records with dignified empty states.
+Strict quality standard: **Zero fake or hardcoded artist data in production code**. All artist profiles, artworks, cultural stories, and enquiries are rendered dynamically from real Supabase Postgres records with tasteful empty states. Sample profiles used for demonstrations are clearly labelled as **"Sample profile"** in the UI.
 
 ---
 
 ## 2. Problem Statement
 
-Traditional Indian artists face severe structural barriers in the modern digital economy:
-1. **The Digital Literacy Divide**: Many artisans are fluent in regional languages (Malayalam, Hindi, Tamil, etc.) but find typing marketing copy in English prohibitive.
-2. **Loss of Cultural Context**: When photos of sacred paintings or tribal crafts are circulated online, the lineage, natural mineral dyes, guru-shishya heritage, and ritual symbolism are lost.
-3. **Exploitative Intermediaries**: Commercial marketplaces take heavy margins (up to 40-50%) and obscure the artist's contact details, preventing long-term patronage.
-4. **Bandwidth & Device Constraints**: High-resolution mobile camera photos fail to upload over 3G/4G connections without proper client-side image optimization.
+Traditional Indian artisans face severe structural barriers in the modern digital economy:
 
-**Kriti solves this** by making the creation of a professional online identity as simple as speaking into a phone microphone, generating beautiful shareable cards with cultural stories embedded, and enabling direct peer-to-peer patronage.
+1. **The Digital Literacy Divide**: Many master artisans speak and think in their regional mother tongues (Malayalam, Hindi, Tamil, Odia) but find typing complex marketing copy or product listings in English intimidating.
+2. **Loss of Cultural Context**: When photos of sacred paintings, handloom weaves, or tribal crafts are circulated online, the lineage, natural mineral pigments, sacred iconography, and guru-shishya heritage are stripped away.
+3. **Exploitative Intermediaries**: Commercial marketplaces often take 30% to 50% commission margins and obscure the artist's contact details, preventing direct patronage and generational sustainability.
+4. **Bandwidth & Device Constraints**: High-resolution mobile camera photos fail to upload over 2G/3G/4G connections without fast client-side image optimization.
+
+**Kriti addresses this** by making the creation of a professional digital portfolio as simple as speaking into a phone microphone, generating shareable cards with cultural narratives embedded, and connecting patrons directly to the artisan's studio.
 
 ---
 
 ## 3. Key Features
 
-1. **Artist Onboarding & Profile**:
-   - Barrier-free, passwordless login via Supabase Email Magic Links.
+1. **Voice-First Storytelling ("Tell Your Story")**:
+   - Native Web Speech API integration (`SpeechRecognition`) with zero paid third-party APIs or LLM runtime dependencies.
+   - Regional speech recognition language selector (`ml-IN` Malayalam, `hi-IN` Hindi, `ta-IN` Tamil, `en-IN` English).
+   - 3 Guided Storytelling Prompts:
+     - *(a) "What is this artwork and what does it show?"*
+     - *(b) "Who taught you, and how is it made?"*
+     - *(c) "What does it mean in your tradition?"*
+   - Real-time listening pulse, continuous keyboard editing fallback, and browser compatibility handling.
+
+2. **Artist Profile & Identity**:
+   - Passwordless, barrier-free login via Supabase Email Magic Links.
    - Dual-script support: artist name in Latin script and optional mother-tongue script (`name_regional`, e.g., in Malayalam, Devanagari, or Tamil).
-   - Profile with art form, Indian state/district, biography, languages spoken, portrait upload, and direct WhatsApp/phone contact channels.
+   - Profile with art form, Indian state and district, biography, languages spoken, portrait upload, and direct WhatsApp/phone contact channels.
    - Automatic unique slug generation (e.g. `/a/narayan-marar-kerala-mural`).
 
-2. **Artwork Gallery Manager**:
-   - Fast client-side image compression (`<= 5MB`, HTML5 Canvas WebP/JPEG) optimized for mobile connections.
+3. **Artwork Gallery Manager**:
+   - Client-side image compression (`<= 5MB`, HTML5 Canvas WebP/JPEG) optimized for mobile connections.
    - Core fields: Title, regional title, medium/materials, year, dimensions, price (or "Price on Request" toggle), availability status (`available`, `reserved`, `sold`, `archived`).
-   - First-class **Cultural Context / Story** narrative field.
+   - First-class **Cultural Context / Narrative** story field.
    - Mandatory ethical declaration checkbox: *"This work is mine, or I have the artist's permission to share it."*
-   - Responsive grid, lightbox view, edit, and delete for the authenticated artist.
+   - Responsive grid, uncropped lightbox view, edit, and delete controls for the authenticated artist.
 
-3. **Shareable Artwork Card**:
-   - Designed mounted-print card featuring artwork image, title, artist name, location, art form, cultural context snippet, and portfolio URL.
+4. **Shareable Artwork Cards**:
+   - Designed mounted-print card featuring artwork image, title, artist name, location, art form, cultural context narrative snippet, and portfolio URL.
    - **Download as Image**: Exports crisp 2x resolution PNG using `html-to-image`.
    - **Share via WhatsApp**: Direct `wa.me` link pre-filled with formatted title, artist, story snippet, and URL.
    - **Copy Link & Native Share Sheet**: Full clipboard and Web Share API support.
    - Dynamic Open Graph meta tags (`og:title`, `og:description`, `og:image`, `og:url`) for rich social link previews.
 
-4. **Multilingual Social Media Caption Templates**:
+5. **Multilingual Social Media Caption Templates**:
    - Generates social captions in **Malayalam (Default)**, **English**, **Hindi**, and **Tamil**.
-   - 3 Curated Tones:
-     - *Story*: Focuses on lineage, sacred symbols, and natural mineral dyes.
-     - *Announcement*: Studio update announcing a newly completed piece.
-     - *Commission Open*: Invites custom orders and workshops.
+   - 4 Curated Tones:
+     - *Storyteller*: Highlights lineage, natural mineral pigments, and cultural heritage.
+     - *Festive / Exhibition*: Studio announcement for upcoming melas and exhibitions.
+     - *Collector / Patron*: Detailed artistic specifications for art collectors.
+     - *Minimal*: Clean caption with attribution and portfolio link.
    - Live editable textarea preview + one-click copy button.
    - Visible native-speaker review recommendation notice.
 
-5. **Direct Patron Enquiry / Commission Form**:
-   - Embedded on all artist profiles and artwork detail pages.
+6. **Direct Patron Enquiry / Commission Workflow**:
+   - Embedded on all artist portfolios and artwork detail pages.
    - Fields: Name, contact (email or phone), message, enquiry type (*Buy / Commission / Collaboration / Workshop*), optional budget.
-   - **Honeypot Spam Defense**: Invisible honeypot field that drops bot spam without affecting real patrons.
+   - **Honeypot Spam Defense**: Invisible honeypot field dropping bot submissions without blocking genuine patrons.
    - Private Artist Dashboard Inbox: Received enquiries with read/unread status toggle, 1-click **WhatsApp Reply** and **Email Reply** shortcuts.
 
-6. **Public Portfolio & Printable QR Code**:
-   - Public page at `/a/:slug` with mobile-first responsive layout (375px+).
-   - Sticky bottom mobile action bar (`[Enquire / Buy]` & `[Share Portfolio]`).
-   - High-contrast downloadable QR code (PNG, via `qrcode`) with the artist's name and art form branded beneath it for exhibition stalls and visiting cards.
+7. **Public Mobile Portfolio & Printable Craft Tag QR Codes**:
+   - Public mobile-first URL at `/a/:slug` (optimized for 375px+ viewports).
+   - High-contrast downloadable QR code (PNG, via `qrcode`) with the artist's name and art form branded for physical craft exhibitions, visiting cards, and parcel tags.
+   - Printable **Craft Tag** physical certificate modal for packaging.
 
-7. **UNIQUE FEATURE — Voice "Tell Your Story"**:
-   - Native Web Speech API integration (`SpeechRecognition` / `webkitSpeechRecognition`) with **zero paid APIs and zero LLM calls**.
-   - Regional speech recognition language selector (`ml-IN`, `en-IN`, `hi-IN`, `ta-IN`).
-   - 3 Guided Storytelling Prompts for artworks:
-     - *(a) "What is this artwork and what does it show?"*
-     - *(b) "Who taught you, and how is it made?"*
-     - *(c) "What does it mean in your tradition?"*
-   - Real-time listening pulse state, permission denial handler, browser compatibility warnings, and continuous keyboard editing fallback.
-
-8. **Discovery & Multi-Parameter Search Engine**:
-   - Home page lists all registered artists dynamically from Supabase Postgres.
+8. **Discovery & Search Engine**:
+   - Home page dynamically discovers registered artisans from Supabase Postgres.
    - Multi-parameter live search: free-text keyword search across names, regional scripts, crafts, locations, and bios.
    - Reactive filters: Art Form, Indian State, and Spoken Language.
-   - Authentic empty states when no records or no search matches exist.
+   - Authentic empty states with handloom weave textures.
 
 ---
 
@@ -91,17 +101,18 @@ Traditional Indian artists face severe structural barriers in the modern digital
 
 - **Frontend Framework**: React 19 + TypeScript + Vite 8
 - **Routing**: React Router 7 (`react-router-dom`)
-- **Styling & Design System**: Tailwind CSS v4 (`@tailwindcss/vite`) with custom Indian heritage tokens:
-  - *Paper Cream* (`#F6EEDC`), *Warm Ivory* (`#FBF6EA`), *Indigo Ink* (`#1F2A44`), *Madder Red* (`#A63D2F`), *Turmeric* (`#E0A526`), *Terracotta* (`#C8683F`), *Leaf Green* (`#4F6B3A`), *Charcoal* (`#2B2622`).
+- **Styling & Design System**: Tailwind CSS v4 (`@tailwindcss/vite`) with custom authentic Indian heritage tokens:
+  - *Deep Oxblood / Walnut* (`#3A1D18`), *Charcoal* (`#2B2622`), *Paper* (`#F6EEDC`), *Ivory* (`#FBF6EA`), *Madder Red* (`#A63D2F`), *Turmeric Gold* (`#E0A526`), *Terracotta* (`#C8683F`), *Leaf Green* (`#4F6B3A`), *Sage* (`#8A9A78`), *Soft Clay* (`#E7CDB4`).
 - **Typography (Google Fonts / OFL)**:
-  - Headings: *Fraunces*
-  - Body: *Mukta*
+  - Display Wordmarks & Headlines: *Rozha One* & *Fraunces*
+  - Body & Labels: *Mukta*
   - Malayalam: *Noto Serif Malayalam* & *Noto Sans Malayalam*
   - Devanagari & Tamil: *Noto Sans Devanagari* & *Noto Sans Tamil*
+- **Animation**: Framer Motion (respects `prefers-reduced-motion`)
 - **Backend & Database**: Supabase (PostgreSQL with Row Level Security, Supabase Auth via Email Magic Links, Supabase Storage)
 - **Client Utilities**:
   - `qrcode`: Client-side QR generation for physical craft stalls.
-  - `html-to-image`: Client-side rendering of shareable artwork cards to high-resolution PNG.
+  - `html-to-image`: Client-side rendering of shareable artwork cards and craft tags to high-resolution PNG.
   - `lucide-react`: Lightweight, accessible icon set.
   - HTML5 Canvas: Client-side image compression (`<= 5MB`, WebP/JPEG).
   - Web Speech API: Native voice-to-text input with regional locale support.
@@ -115,13 +126,13 @@ Traditional Indian artists face severe structural barriers in the modern digital
 ```mermaid
 flowchart TD
     subgraph UserClients ["Patrons & Traditional Artists"]
-        MobileClient["Mobile Browser (375px+)<br/>Touch-First Actions"]
+        MobileClient["Mobile Browser (375px+)<br/>Touch-First Actions & Audio"]
         DesktopClient["Desktop Browser<br/>Studio Dashboard & Discovery"]
     end
 
     subgraph FrontendApp ["Kriti React Application (Vercel)"]
         Router["React Router v7<br/>(/, /login, /dashboard, /a/:slug, /about)"]
-        DesignSys["Tailwind v4 Design System<br/>(Paper Grain, Warm Ivory, Madder Red)"]
+        DesignSys["Tailwind v4 Design System<br/>(Paper Grain, Warm Ivory, Oxblood, Madder)"]
         VoiceModule["Web Speech Engine<br/>(en-IN, ml-IN, hi-IN, ta-IN • Zero LLM)"]
         Compressor["Client Image Compressor<br/>(HTML5 Canvas &lt;= 5MB WebP/JPG)"]
         CardExporter["Share Card &amp; QR Generator<br/>(html-to-image, qrcode)"]
@@ -159,7 +170,7 @@ flowchart TD
 ## 6. Installation & Setup Instructions
 
 ### Prerequisites
-- Node.js (v18.0.0 or later; v24 LTS recommended)
+- Node.js (v18.0.0 or later; v20+ recommended)
 - npm (v9.0.0 or later)
 - A free Supabase account ([supabase.com](https://supabase.com))
 
@@ -180,7 +191,7 @@ flowchart TD
    ```bash
    cp .env.example .env
    ```
-   Add your Supabase project credentials (see Section 7).
+   Add your Supabase project URL and anon public key (see Section 7).
 
 4. **Initialize Supabase Database & Storage**:
    - Open your project in the [Supabase Dashboard](https://app.supabase.com).
@@ -196,7 +207,7 @@ flowchart TD
 
 6. **Run Unit Tests**:
    ```bash
-   npm test
+   npm test -- --run
    ```
 
 7. **Production Build**:
@@ -212,14 +223,14 @@ Create a `.env` file in the project root based on `.env.example`:
 
 ```env
 # Supabase Project URL (Dashboard > Settings > API > Project URL)
-VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_URL=your_supabase_project_url_here
 
 # Supabase Anon Public Key (Dashboard > Settings > API > Project API keys > anon public)
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_public_key_here
 ```
 
 > [!CAUTION]
-> **Security Notice**: Never commit `.env` or expose the `service_role` secret key! Only use `VITE_SUPABASE_ANON_KEY` on the client.
+> **Security Notice**: Never commit `.env` or expose the `service_role` secret key! Only use `VITE_SUPABASE_ANON_KEY` on the client. `.env` is gitignored by default.
 
 ---
 
@@ -229,7 +240,7 @@ VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 1. **Sign In**: Navigate to `/login`, enter your email, and click the magic link sent to your inbox.
 2. **Setup Profile**: In the **Profile & Biography** tab, enter your name, regional script name, art form, location, and bio. Use the **Voice "Tell Your Story"** microphone button to speak your bio in Malayalam, Hindi, Tamil, or English. Upload a portrait and add your WhatsApp contact number.
 3. **Upload Artwork**: Switch to the **Artworks Gallery** tab and click **Add Artwork**. Choose an image (auto-compressed), enter dimensions/medium, and use the guided voice prompts to record the cultural story. Tick the ethical ownership declaration and save.
-4. **Share**: View your public portfolio at `/a/:slug`. Tap **Share Card** to download an image for Instagram, or **Share & QR Code** to download a printable stall QR code.
+4. **Share**: View your public portfolio at `/a/:slug`. Tap **Share Card** to download an image for Instagram/WhatsApp, or **Share & QR Code** to download a printable stall QR code.
 5. **Manage Enquiries**: Check the **Enquiries & Commissions** tab to review messages from art patrons with 1-click WhatsApp and email reply shortcuts.
 
 ### For Art Patrons & Collectors
@@ -260,10 +271,10 @@ Place demonstration screenshots in the `docs/screenshots/` directory:
 
 ## 10. Team Members
 
-*(Fill in during submission)*
-- **Builder / Designer**: Solo Builder
-- **Role**: Full-Stack Engineer & Designer
-- **Hackathon Track**: ART//CODE Hackathon — *"From Craft to Click – Artist Visibility"*
+*(Fill in before submission)*
+- **Team Member 1**: `[Your Name]` — `[Role, e.g. Full-Stack Developer & Designer]` — `[GitHub: @username]`
+- **Track**: ART//CODE Hackathon — *"From Craft to Click – Artist Visibility"*
+- **Date**: 08 November 2026
 
 ---
 
@@ -271,9 +282,10 @@ Place demonstration screenshots in the `docs/screenshots/` directory:
 
 ### Current Limitations
 1. **Voice Input Browser Support**: The Web Speech API is supported natively on Google Chrome, Microsoft Edge, Chromium-based browsers, and Android Chrome. Apple Safari and desktop Firefox have limited or vendor-flagged support. The app detects this gracefully and provides instant keyboard typing fallback.
-2. **Regional Template Review**: While caption templates have been crafted in authentic Malayalam, Hindi, and Tamil, regional variations and dialects exist across states. Captions include a visible notice advising artists to review text before publishing; formal native-speaker linguistic validation is recommended as new art forms join.
-3. **No In-App Payment Gateway**: To preserve 100% fair trade and eliminate transaction commissions, payments and shipping are coordinated directly between patron and artist via WhatsApp and email.
-4. **No Automated Content Moderation**: Platform integrity currently relies on the mandatory ethical declaration checkbox. Large-scale public rollouts will benefit from community reporting and artisanal guild verification.
+2. **Regional Caption Template Validation**: While caption templates have been crafted in authentic Malayalam, Hindi, and Tamil, regional variations and dialects exist across states. Captions include a visible notice advising artists to review text before publishing; formal native-speaker linguistic validation is recommended as new art forms join.
+3. **Sample Profiles Labelled**: Demonstration artists created in the database are clearly labelled with a **"Sample profile"** badge in the UI to ensure patrons distinguish test records from live master profiles.
+4. **No In-App Payment Gateway**: To preserve 100% fair trade and eliminate transaction commissions, payments and shipping are coordinated directly between patron and artist via WhatsApp and email.
+5. **No Automated Content Moderation**: Platform integrity currently relies on the mandatory ethical declaration checkbox. Large-scale public rollouts will benefit from community reporting and artisanal guild verification.
 
 ### Future Scope
 - **Progressive Web App (PWA) Offline Mode**: Allow artists in remote craft clusters to draft artworks offline and synchronize automatically when connectivity is restored.
@@ -286,5 +298,6 @@ Place demonstration screenshots in the `docs/screenshots/` directory:
 ## 12. License & Attribution
 
 - **License**: Released under the open-source [MIT License](LICENSE).
-- **Fonts & Typography**: Licensed under the [SIL Open Font License](CREDITS.md) (Google Fonts: *Fraunces*, *Mukta*, *Noto Serif Malayalam*, *Noto Sans Malayalam*, *Noto Sans Devanagari*, *Noto Sans Tamil*).
+- **Fonts & Typography**: Licensed under the [SIL Open Font License](CREDITS.md) (Google Fonts: *Rozha One*, *Fraunces*, *Mukta*, *Noto Serif Malayalam*, *Noto Sans Malayalam*, *Noto Sans Devanagari*, *Noto Sans Tamil*).
+- **Libraries**: All open-source dependencies are listed in [CREDITS.md](CREDITS.md).
 - **Cultural Attribution**: Traditional art styles, motifs, and sacred geometries belong immutably to the hereditary and indigenous communities of India.

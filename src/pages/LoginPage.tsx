@@ -50,17 +50,17 @@ export const LoginPage: React.FC = () => {
 
         <div className="text-center mb-8">
           <BrandLogo className="w-14 h-14 mx-auto mb-3" />
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-indigo-ink">
+          <h1 className="font-display text-2xl sm:text-3xl font-normal text-oxblood">
             Artist Studio Login
           </h1>
-          <p className="text-sm text-charcoal/70 mt-1.5">
+          <p className="text-sm text-charcoal/70 mt-1.5 font-serif">
             Create or manage your professional online portfolio and cultural stories
           </p>
         </div>
 
         {!isConfigured && (
-          <div className="mb-6 p-4 rounded-lg bg-turmeric/15 border border-turmeric/40 text-xs text-indigo-ink leading-relaxed">
-            <strong>Backend configuration missing:</strong> Please add your Supabase project keys to <code className="bg-warm-ivory px-1 py-0.5 rounded">.env</code> as detailed in <code className="bg-warm-ivory px-1 py-0.5 rounded">SETUP.md</code> to enable live authentication.
+          <div className="mb-6 p-4 rounded-lg bg-turmeric/15 border border-turmeric/40 text-xs text-oxblood leading-relaxed">
+            <strong>Backend configuration missing:</strong> Please add your Supabase project keys to <code className="bg-ivory px-1 py-0.5 rounded">.env</code> as detailed in <code className="bg-ivory px-1 py-0.5 rounded">SETUP.md</code> to enable live authentication.
           </div>
         )}
 
@@ -69,13 +69,13 @@ export const LoginPage: React.FC = () => {
             <div className="w-14 h-14 mx-auto rounded-full bg-leaf-green/15 text-leaf-green flex items-center justify-center">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h2 className="font-serif text-xl font-bold text-indigo-ink">
+            <h2 className="font-serif text-xl font-bold text-oxblood">
               Check Your Email
             </h2>
             <p className="text-sm text-charcoal/80 leading-relaxed">
               We sent a password-free sign-in link to:
               <br />
-              <strong className="text-indigo-ink font-semibold">{email}</strong>
+              <strong className="text-oxblood font-semibold">{email}</strong>
             </p>
             <p className="text-xs text-charcoal/60">
               Click the link in your email on this device to open your Artist Studio.
@@ -92,7 +92,7 @@ export const LoginPage: React.FC = () => {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-indigo-ink mb-1.5">
+              <label htmlFor="email" className="block text-sm font-semibold text-oxblood mb-1.5 font-serif">
                 Your Email Address
               </label>
               <div className="relative">
@@ -104,10 +104,10 @@ export const LoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. artist@kriti.art"
-                  className="w-full pl-11 pr-4 py-3 rounded-lg border border-terracotta/30 bg-paper-cream focus:bg-warm-ivory focus:ring-2 focus:ring-madder-red focus:border-transparent outline-none transition text-sm text-charcoal"
+                  className="input-heritage w-full pl-11 pr-4 py-3 rounded-xl border border-turmeric/35 text-sm text-charcoal outline-none touch-target"
                 />
               </div>
-              <p className="text-xs text-charcoal/60 mt-1.5">
+              <p className="text-xs text-charcoal/60 mt-1.5 font-serif">
                 No passwords to remember. We send a secure 1-click login link.
               </p>
             </div>
@@ -115,14 +115,14 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading || !isConfigured}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-madder-red text-warm-ivory font-medium hover:bg-madder-red/90 transition shadow-sm touch-target disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="btn-stitched-madder w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold tracking-wide shadow-md touch-target disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isLoading ? (
                 <span>Sending magic link...</span>
               ) : (
                 <>
                   <span>Send Magic Sign-In Link</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-turmeric" />
                 </>
               )}
             </button>

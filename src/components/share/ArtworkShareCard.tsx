@@ -1,17 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { toPng } from 'html-to-image';
 import { Download, Share2, Copy, Check, MessageCircle, X } from 'lucide-react';
 import { useToast } from '../common/Toast';
 import { BrandLogo, CornerOrnament } from '../common/Motifs';
 import { APP_CONFIG } from '../../config/appConfig';
 import type { Artwork, Artist } from '../../types/database.types';
-
+ 
 interface ArtworkShareCardProps {
   artwork: Artwork;
   artist: Artist;
   onClose?: () => void;
 }
-
+ 
 export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
   artwork,
   artist,
@@ -21,9 +21,9 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
   const [isExporting, setIsExporting] = useState(false);
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
-
+ 
   const shareUrl = `${window.location.origin}/a/${artist.slug}#artwork-${artwork.id}`;
-
+ 
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -34,7 +34,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
       showToast('Failed to copy link.', 'error');
     }
   };
-
+ 
   const handleDownloadImage = async () => {
     if (!cardRef.current) return;
     try {
@@ -44,7 +44,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
         quality: 0.95,
         pixelRatio: 2, // High resolution for crisp sharing
       });
-
+ 
       const link = document.createElement('a');
       link.download = `${artwork.title.toLowerCase().replace(/\s+/g, '-')}-kriti.png`;
       link.href = dataUrl;
@@ -56,7 +56,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
       setIsExporting(false);
     }
   };
-
+ 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
       `🎨 *${artwork.title}* by *${artist.name}* (${artist.art_form})\n\n` +
@@ -66,7 +66,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
-
+ 
   const handleNativeShare = async () => {
     if (navigator.share) {
       try {
@@ -84,31 +84,44 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
       handleCopyLink();
     }
   };
-
+ 
+  // Close on Escape key
+  useEffect(() => {
+    if (!onClose) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+ 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-indigo-ink/65 backdrop-blur-xs overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-oxblood/65 backdrop-blur-xs overflow-y-auto"
       role="dialog"
       aria-modal="true"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose?.();
+      }}
     >
-      <div className="relative bg-warm-ivory border border-terracotta/30 rounded-2xl max-w-lg w-full p-6 shadow-2xl my-8">
+      <div className="relative bg-warm-ivory border border-terracotta/30 rounded-2xl max-w-lg w-full p-6 shadow-2xl my-auto">
         {onClose && (
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 rounded-full text-charcoal/60 hover:text-charcoal hover:bg-paper-cream transition"
+            className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-paper-cream border border-terracotta/30 text-oxblood hover:bg-white transition cursor-pointer"
             aria-label="Close share card"
           >
             <X className="w-5 h-5" />
           </button>
         )}
-
-        <h3 className="font-serif text-xl font-bold text-indigo-ink mb-1">
+ 
+        <h3 className="font-serif text-xl font-bold text-oxblood mb-1">
           Shareable Artwork Card
         </h3>
         <p className="text-xs text-charcoal/70 mb-4">
           Download as an image or share directly with cultural context preserved.
         </p>
-
+ 
         {/* The Designed Printable Card */}
         <div
           ref={cardRef}
@@ -117,7 +130,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
         >
           <CornerOrnament className="absolute top-2 left-2 w-5 h-5 opacity-50" />
           <CornerOrnament className="absolute bottom-2 right-2 w-5 h-5 rotate-180 opacity-50" />
-
+ 
           {/* Artwork Image */}
           <div className="relative aspect-4/3 rounded-lg overflow-hidden border border-terracotta/25 bg-warm-ivory mb-4 shadow-2xs">
             <img
@@ -127,12 +140,12 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
               crossOrigin="anonymous"
             />
           </div>
-
+ 
           {/* Details */}
           <div className="space-y-2">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h4 className="font-serif text-xl font-bold text-indigo-ink leading-tight">
+                <h4 className="font-serif text-xl font-bold text-oxblood leading-tight">
                   {artwork.title}
                 </h4>
                 {artwork.title_regional && (
@@ -145,21 +158,21 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
                 {artist.art_form}
               </span>
             </div>
-
+ 
             <p className="text-xs font-medium text-charcoal/90">
-              By <strong className="text-indigo-ink">{artist.name}</strong> • {artist.location_state}, India
+              By <strong className="text-oxblood">{artist.name}</strong> • {artist.location_state}, India
             </p>
-
+ 
             {/* Cultural Context Snippet */}
             <div className="p-2.5 rounded-lg bg-warm-ivory/80 border border-terracotta/20 text-xs text-charcoal/85 italic leading-relaxed">
               "{artwork.cultural_context.length > 200
                 ? `${artwork.cultural_context.substring(0, 200)}...`
                 : artwork.cultural_context}"
             </div>
-
+ 
             {/* Card Branding Footer */}
             <div className="pt-2 border-t border-terracotta/20 flex items-center justify-between text-[11px] text-charcoal/70">
-              <div className="flex items-center gap-1.5 font-semibold text-indigo-ink">
+              <div className="flex items-center gap-1.5 font-semibold text-oxblood">
                 <BrandLogo className="w-4 h-4" />
                 <span>{APP_CONFIG.name}</span>
               </div>
@@ -169,18 +182,18 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
             </div>
           </div>
         </div>
-
+ 
         {/* Share Action Buttons */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-5">
           <button
             onClick={handleDownloadImage}
             disabled={isExporting}
-            className="flex flex-col items-center justify-center p-2.5 rounded-lg bg-madder-red text-warm-ivory hover:bg-madder-red/90 transition text-xs font-semibold shadow-2xs touch-target cursor-pointer disabled:opacity-50"
+            className="btn-stitched-madder flex flex-col items-center justify-center p-2.5 rounded-xl text-xs font-semibold shadow-2xs touch-target cursor-pointer disabled:opacity-50"
           >
-            <Download className="w-4 h-4 mb-1" />
+            <Download className="w-4 h-4 mb-1 text-turmeric" />
             <span>{isExporting ? 'Saving...' : 'Download'}</span>
           </button>
-
+ 
           <button
             onClick={handleWhatsAppShare}
             className="flex flex-col items-center justify-center p-2.5 rounded-lg bg-[#25D366] text-white hover:bg-[#20ba59] transition text-xs font-semibold shadow-2xs touch-target cursor-pointer"
@@ -188,23 +201,33 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
             <MessageCircle className="w-4 h-4 mb-1" />
             <span>WhatsApp</span>
           </button>
-
+ 
           <button
             onClick={handleCopyLink}
-            className="flex flex-col items-center justify-center p-2.5 rounded-lg border border-terracotta/30 text-indigo-ink hover:bg-paper-cream transition text-xs font-semibold touch-target cursor-pointer"
+            className="flex flex-col items-center justify-center p-2.5 rounded-lg border border-terracotta/30 text-oxblood hover:bg-paper-cream transition text-xs font-semibold touch-target cursor-pointer"
           >
             {copied ? <Check className="w-4 h-4 mb-1 text-leaf-green" /> : <Copy className="w-4 h-4 mb-1" />}
             <span>{copied ? 'Copied' : 'Copy Link'}</span>
           </button>
-
+ 
           <button
             onClick={handleNativeShare}
-            className="flex flex-col items-center justify-center p-2.5 rounded-lg border border-terracotta/30 text-indigo-ink hover:bg-paper-cream transition text-xs font-semibold touch-target cursor-pointer"
+            className="flex flex-col items-center justify-center p-2.5 rounded-lg border border-terracotta/30 text-oxblood hover:bg-paper-cream transition text-xs font-semibold touch-target cursor-pointer"
           >
             <Share2 className="w-4 h-4 mb-1" />
             <span>Share</span>
           </button>
         </div>
+ 
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full mt-3 py-2.5 rounded-lg border border-terracotta/30 text-oxblood text-xs font-semibold hover:bg-paper-cream transition cursor-pointer"
+          >
+            Close
+          </button>
+        )}
       </div>
     </div>
   );

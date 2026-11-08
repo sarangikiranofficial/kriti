@@ -29,19 +29,19 @@ export const DashboardPage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
       {/* Studio Header */}
-      <div className="relative bg-warm-ivory border border-terracotta/25 rounded-2xl p-6 sm:p-8 mb-8 shadow-xs">
-        <CornerOrnament className="absolute top-2 left-2 w-6 h-6 opacity-30" />
-        <CornerOrnament className="absolute bottom-2 right-2 w-6 h-6 rotate-180 opacity-30" />
+      <div className="relative bg-ivory border border-turmeric/35 rounded-2xl p-6 sm:p-8 mb-8 shadow-xs frame-mat">
+        <CornerOrnament className="absolute top-2 left-2 w-6 h-6 opacity-30 text-oxblood" />
+        <CornerOrnament className="absolute bottom-2 right-2 w-6 h-6 rotate-180 opacity-30 text-oxblood" />
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-terracotta">
+            <span className="text-xs font-semibold uppercase tracking-wider text-terracotta font-serif">
               Artist Studio &amp; Portfolio Dashboard
             </span>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-indigo-ink mt-1">
+            <h1 className="font-display text-2xl sm:text-3xl font-normal text-oxblood mt-1">
               {artist ? `Namaskaram, ${artist.name}` : 'Welcome, Artist'}
             </h1>
-            <p className="text-xs sm:text-sm text-charcoal/70 mt-1">
+            <p className="text-xs sm:text-sm text-charcoal/70 mt-1 font-serif">
               {artist
                 ? `${artist.art_form} • ${artist.location_state}`
                 : 'Complete your profile to generate your public portfolio URL'}
@@ -53,22 +53,22 @@ export const DashboardPage: React.FC = () => {
               href={`/a/${artist.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-xs touch-target"
+              className="btn-stitched-madder inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm touch-target"
             >
               <span>View Public Portfolio</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="w-3.5 h-3.5 text-turmeric" />
             </a>
           )}
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 mt-6 border-b border-terracotta/20 overflow-x-auto pb-px">
+        <div className="flex items-center gap-2 mt-6 border-b border-turmeric/25 overflow-x-auto pb-px">
           <button
             onClick={() => setActiveTab('artworks')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 transition touch-target whitespace-nowrap ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 transition touch-target whitespace-nowrap font-serif ${
               activeTab === 'artworks'
-                ? 'border-madder-red text-madder-red'
-                : 'border-transparent text-charcoal/70 hover:text-indigo-ink'
+                ? 'border-madder-red text-madder-red bg-paper/60 rounded-t-lg'
+                : 'border-transparent text-charcoal/70 hover:text-oxblood'
             }`}
           >
             <Palette className="w-4 h-4" />
@@ -77,10 +77,10 @@ export const DashboardPage: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('profile')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 transition touch-target whitespace-nowrap ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 transition touch-target whitespace-nowrap font-serif ${
               activeTab === 'profile'
-                ? 'border-madder-red text-madder-red'
-                : 'border-transparent text-charcoal/70 hover:text-indigo-ink'
+                ? 'border-madder-red text-madder-red bg-paper/60 rounded-t-lg'
+                : 'border-transparent text-charcoal/70 hover:text-oxblood'
             }`}
           >
             <User className="w-4 h-4" />
@@ -89,10 +89,10 @@ export const DashboardPage: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('enquiries')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 transition touch-target whitespace-nowrap ${
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 transition touch-target whitespace-nowrap font-serif ${
               activeTab === 'enquiries'
-                ? 'border-madder-red text-madder-red'
-                : 'border-transparent text-charcoal/70 hover:text-indigo-ink'
+                ? 'border-madder-red text-madder-red bg-paper/60 rounded-t-lg'
+                : 'border-transparent text-charcoal/70 hover:text-oxblood'
             }`}
           >
             <MessageSquare className="w-4 h-4" />

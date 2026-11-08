@@ -3,14 +3,14 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Palette, UserCircle, LogOut, AlertTriangle } from 'lucide-react';
 import { TraditionalLogoBadge, BorderBand } from './Motifs';
 import { useAuth } from '../../context/AuthContext';
- 
+
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, artist, signOut, isConfigured } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
- 
+
   // Logo: go to the top of the home page
   const handleLogoClick = () => {
     setIsOpen(false);
@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
- 
+
   // "Explore Artisans": go to the artist filter area on the home page
   const handleExploreClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
       navigate('/#artist-filters');
     }
   };
- 
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
@@ -39,13 +39,13 @@ export const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
- 
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
     setIsOpen(false);
   };
- 
+
   return (
     <header
       className={`sticky top-0 z-40 relative transition-all duration-300 ${
@@ -54,19 +54,19 @@ export const Navbar: React.FC = () => {
           : ''
       }`}
       style={{
-        backgroundImage: "url('/images/editorial/header-textile.jpg'), url('/images/textures/paper-texture.png')",
-        backgroundSize: 'cover, 380px auto',
-        backgroundPosition: 'center, 0 0',
+        backgroundImage: "url('/images/textures/paper-texture.png')",
+        backgroundSize: '380px auto',
+        backgroundPosition: '0 0',
       }}
     >
       {/* Warm Oxblood Overlay (78% - 86% opacity) for high-contrast legible nav text */}
       <div className="absolute inset-0 bg-gradient-to-r from-oxblood/92 via-oxblood/82 to-oxblood/92 pointer-events-none" />
- 
+
       {/* Top Tone-on-Tone Jaali Lattice Rule */}
       <div className="relative z-10">
         <BorderBand className="w-full h-1.5 opacity-70" tone="gold" />
       </div>
- 
+
       {!isConfigured && (
         <div className="relative z-10 bg-turmeric/20 border-b border-turmeric/35 px-4 py-1.5 text-xs text-ivory flex items-center justify-center gap-2">
           <AlertTriangle className="w-4 h-4 text-turmeric flex-shrink-0" />
@@ -75,7 +75,7 @@ export const Navbar: React.FC = () => {
           </span>
         </div>
       )}
- 
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex items-center justify-between transition-all duration-300 ${
@@ -90,7 +90,7 @@ export const Navbar: React.FC = () => {
           >
             <TraditionalLogoBadge isLight={true} size={isScrolled ? 'sm' : 'md'} />
           </Link>
- 
+
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.14em] font-medium">
             <Link
@@ -106,7 +106,7 @@ export const Navbar: React.FC = () => {
             >
               About &amp; Ethics
             </Link>
- 
+
             {user ? (
               <div className="flex items-center gap-3 pl-3 border-l border-turmeric/30">
                 <Link
@@ -135,7 +135,7 @@ export const Navbar: React.FC = () => {
               </Link>
             )}
           </nav>
- 
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -146,7 +146,7 @@ export const Navbar: React.FC = () => {
           </button>
         </div>
       </div>
- 
+
       {/* Mobile Drawer (Clean slide-down menu) */}
       {isOpen && (
         <div className="md:hidden relative z-20 border-t border-turmeric/25 bg-oxblood/98 backdrop-blur-md px-5 pt-4 pb-6 space-y-3.5 text-ivory">
@@ -164,7 +164,7 @@ export const Navbar: React.FC = () => {
           >
             About &amp; Cultural Ethics
           </Link>
- 
+
           {user ? (
             <div className="pt-2 space-y-2">
               <Link

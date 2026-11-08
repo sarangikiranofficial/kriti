@@ -25,7 +25,7 @@ import { EmptyState } from '../components/common/EmptyState';
 import { SampleBadge, isSampleProfile } from '../components/common/SampleBadge';
 import { APP_CONFIG } from '../config/appConfig';
 import type { Artist } from '../types/database.types';
- 
+
 /**
  * AnimatedCounter: Accessible count-up triggered on viewport entry.
  * Strictly displays real database counts; hides when count is 0.
@@ -38,7 +38,7 @@ const AnimatedCounter: React.FC<{ value: number; label: string; suffix?: string 
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: false, amount: 0.3 });
- 
+
   useEffect(() => {
     if (!inView || value <= 0) {
       setDisplayValue(0);
@@ -60,9 +60,9 @@ const AnimatedCounter: React.FC<{ value: number; label: string; suffix?: string 
     }, stepTime);
     return () => clearInterval(timer);
   }, [inView, value]);
- 
+
   if (value <= 0) return null;
- 
+
   return (
     <div
       ref={ref}
@@ -78,10 +78,10 @@ const AnimatedCounter: React.FC<{ value: number; label: string; suffix?: string 
     </div>
   );
 };
- 
+
 export const HomePage: React.FC = () => {
   const location = useLocation();
- 
+
   // Scroll to the filter area for /#artist-filters, otherwise to the top of the page
   useEffect(() => {
     if (location.hash) {
@@ -94,17 +94,17 @@ export const HomePage: React.FC = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [location.pathname, location.hash]);
- 
+
   const [artists, setArtists] = useState<Artist[]>([]);
   const [artworkCount, setArtworkCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
- 
+
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedArtForm, setSelectedArtForm] = useState('ALL');
   const [selectedState, setSelectedState] = useState('ALL');
   const [selectedLanguage, setSelectedLanguage] = useState('ALL');
- 
+
   useEffect(() => {
     const fetchArtistsAndCounts = async () => {
       try {
@@ -114,16 +114,16 @@ export const HomePage: React.FC = () => {
           .from('artists')
           .select('*')
           .order('created_at', { ascending: false });
- 
+
         if (!error && data) {
           setArtists(data as Artist[]);
         }
- 
+
         // 2. Query exact artwork count from database for live numbers
         const { count, error: artworkError } = await supabase
           .from('artworks')
           .select('id', { count: 'exact', head: true });
- 
+
         if (!artworkError && count !== null) {
           setArtworkCount(count);
         }
@@ -133,10 +133,10 @@ export const HomePage: React.FC = () => {
         setLoading(false);
       }
     };
- 
+
     fetchArtistsAndCounts();
   }, []);
- 
+
   // Distinct filter options extracted dynamically from database records
   const distinctArtForms = useMemo(() => {
     const set = new Set<string>();
@@ -145,7 +145,7 @@ export const HomePage: React.FC = () => {
     });
     return Array.from(set).sort();
   }, [artists]);
- 
+
   const distinctStates = useMemo(() => {
     const set = new Set<string>();
     artists.forEach((a) => {
@@ -153,7 +153,7 @@ export const HomePage: React.FC = () => {
     });
     return Array.from(set).sort();
   }, [artists]);
- 
+
   const distinctLanguages = useMemo(() => {
     const set = new Set<string>();
     artists.forEach((a) => {
@@ -163,7 +163,7 @@ export const HomePage: React.FC = () => {
     });
     return Array.from(set).sort();
   }, [artists]);
- 
+
   // Reactive Client Filtering (Search query + 3 dropdowns)
   const filteredArtists = useMemo(() => {
     return artists.filter((artist) => {
@@ -175,41 +175,41 @@ export const HomePage: React.FC = () => {
         const matchesBio = artist.bio.toLowerCase().includes(query);
         const matchesDistrict = artist.location_district?.toLowerCase().includes(query) ?? false;
         const matchesState = artist.location_state.toLowerCase().includes(query);
- 
+
         if (!matchesName && !matchesRegional && !matchesArtForm && !matchesBio && !matchesDistrict && !matchesState) {
           return false;
         }
       }
- 
+
       if (selectedArtForm !== 'ALL' && artist.art_form.toLowerCase() !== selectedArtForm.toLowerCase()) {
         return false;
       }
- 
+
       if (selectedState !== 'ALL' && artist.location_state.toLowerCase() !== selectedState.toLowerCase()) {
         return false;
       }
- 
+
       if (selectedLanguage !== 'ALL') {
         const hasLang = artist.languages_spoken?.some(
           (l) => l.toLowerCase() === selectedLanguage.toLowerCase()
         );
         if (!hasLang) return false;
       }
- 
+
       return true;
     });
   }, [artists, searchQuery, selectedArtForm, selectedState, selectedLanguage]);
- 
+
   const hasActiveFilters =
     searchQuery !== '' || selectedArtForm !== 'ALL' || selectedState !== 'ALL' || selectedLanguage !== 'ALL';
- 
+
   const clearFilters = () => {
     setSearchQuery('');
     setSelectedArtForm('ALL');
     setSelectedState('ALL');
     setSelectedLanguage('ALL');
   };
- 
+
   return (
     <div className="space-y-16 sm:space-y-24">
       {/* =========================================================================
@@ -233,7 +233,7 @@ export const HomePage: React.FC = () => {
                 </span>
                 <span className="h-px bg-turmeric/40 flex-1 max-w-[120px]" />
               </motion.div>
- 
+
               {/* Giant Wordmark: 12-18vw font-display */}
               <motion.div
                 initial={{ opacity: 0, y: 25 }}
@@ -250,7 +250,7 @@ export const HomePage: React.FC = () => {
                   </span>
                 </div>
               </motion.div>
- 
+
               {/* Tagline in two lines with Fraunces italic accent word */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -266,7 +266,7 @@ export const HomePage: React.FC = () => {
                   <span className="italic font-serif text-madder-red">shared with patrons worldwide.</span>
                 </p>
               </motion.div>
- 
+
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -275,7 +275,7 @@ export const HomePage: React.FC = () => {
               >
                 {APP_CONFIG.description}
               </motion.p>
- 
+
               {/* CTAs */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -290,7 +290,7 @@ export const HomePage: React.FC = () => {
                   <UserPlus className="w-4 h-4 text-turmeric" />
                   <span>Create your portfolio</span>
                 </Link>
- 
+
                 <a
                   href="#artist-filters"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-ivory border border-turmeric/50 text-oxblood font-semibold text-sm hover:border-madder-red hover:bg-paper transition touch-target cursor-pointer shadow-2xs"
@@ -300,7 +300,7 @@ export const HomePage: React.FC = () => {
                 </a>
               </motion.div>
             </div>
- 
+
             {/* Right 5 Columns: Cusped Arch Image Frame with Overlapping Stamp */}
             <div className="lg:col-span-5 relative flex justify-center lg:justify-end mt-4 lg:mt-0">
               <motion.div
@@ -316,22 +316,11 @@ export const HomePage: React.FC = () => {
                 >
                   <div className="relative w-full h-full">
                     <img
-                      src="/images/hero/traditional-art.jpg"
-                      alt="Traditional Indian folk and tribal artwork with natural mineral pigments"
-                      className="w-full h-full object-cover"
+                      src="/images/landing/kalamkari-srikalahasti.jpg"
+                      alt="Kalamkari hand-painted cloth showing a colourful peacock among lotus flowers and curling vines on a dark ground"
+                      className="w-full h-full object-cover object-[45%_50%]"
                       loading="eager"
                     />
-                    {/* Indigo/Oxblood Gradient Overlay behind caption text only */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-oxblood/90 via-oxblood/30 to-transparent flex items-end p-5">
-                      <div className="space-y-1">
-                        <span className="text-[10px] uppercase tracking-[0.25em] text-turmeric font-semibold block font-serif">
-                          Preserving Living Heritage
-                        </span>
-                        <p className="text-xs text-ivory/95 font-serif line-clamp-2">
-                          Mineral pigments, palm leaves, handspun cotton and ancestral patience.
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </ArchFrame>
               </motion.div>
@@ -339,7 +328,7 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
- 
+
       {/* =========================================================================
           2. ART FORM MARQUEE (Dynamic Ticker of Distinct Art Forms from DB)
          ========================================================================= */}
@@ -359,7 +348,7 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
       )}
- 
+
       {/* =========================================================================
           3. EDITORIAL COLLAGE: "Stories from the loom, the brush and the lathe"
          ========================================================================= */}
@@ -378,36 +367,30 @@ export const HomePage: React.FC = () => {
               >
                 <ArchFrame className="w-full h-full border border-turmeric/60">
                   <img
-                    src="/images/editorial/editorial-1.jpg"
-                    alt="Master artisan handcrafting heritage folk painting"
+                    src="/images/landing/warli-anonymous.jpg"
+                    alt="Anonymous Warli painting in white on a red-brown paper ground, with stick-figure people, a tree, a fish and a central ceremonial square"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
                 </ArchFrame>
-                <div className="absolute bottom-2 left-3 bg-oxblood/85 backdrop-blur-xs text-ivory text-[10px] px-2.5 py-0.5 rounded font-serif border border-turmeric/40">
-                  The Living Brush
-                </div>
               </motion.div>
- 
+
               {/* Image 2: Secondary Offset Frame */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.15 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
-                className="absolute top-10 right-2 w-[52%] aspect-4/5 z-20 rotate-3 hover:rotate-0 transition-transform duration-500 shadow-xl frame-mat"
+                className="absolute top-10 right-2 w-[52%] aspect-4/5 z-20 rotate-3 hover:rotate-0 transition-transform duration-500 shadow-xl frame-mat bg-ivory"
               >
                 <img
-                  src="/images/editorial/editorial-2.jpg"
-                  alt="Traditional handloom weaving and mineral pigment textile art"
-                  className="w-full h-full object-cover"
+                  src="/images/landing/madhubani-fish.png"
+                  alt="Madhubani-style fish illustration with a red tail, a dark head and a pattern of overlapping scales"
+                  className="w-full h-full object-contain p-3"
                   loading="lazy"
                 />
-                <div className="absolute bottom-2 right-3 bg-oxblood/85 backdrop-blur-xs text-ivory text-[10px] px-2.5 py-0.5 rounded font-serif border border-turmeric/40">
-                  Rhythms of the Loom
-                </div>
               </motion.div>
- 
+
               {/* Image 3: Accent Mat Frame at bottom left */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -417,18 +400,15 @@ export const HomePage: React.FC = () => {
                 className="absolute -bottom-4 left-[24%] w-[44%] aspect-square z-30 -rotate-1 hover:rotate-0 transition-transform duration-500 shadow-2xl frame-mat border-2 border-turmeric/50"
               >
                 <img
-                  src="/images/editorial/editorial-3.jpg"
-                  alt="Ancestral pottery, woodcraft and metal casting techniques"
-                  className="w-full h-full object-cover"
+                  src="/images/landing/kalamkari-met-panel.jpg"
+                  alt="Black-and-white museum photograph of a block-printed Kalamkari panel with an arched niche framed by floral borders"
+                  className="w-full h-full object-cover object-[50%_30%]"
                   loading="lazy"
                 />
-                <div className="absolute bottom-2 left-2 bg-oxblood/90 text-turmeric text-[9px] uppercase tracking-wider px-2 py-0.5 rounded font-serif">
-                  Craft Lineage
-                </div>
               </motion.div>
             </div>
           </div>
- 
+
           {/* Editorial Text & Pull Quote */}
           <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
             <div className="flex items-center gap-3">
@@ -437,11 +417,11 @@ export const HomePage: React.FC = () => {
               </span>
               <span className="h-px bg-turmeric/35 flex-1 max-w-[80px]" />
             </div>
- 
+
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-oxblood leading-tight tracking-tight">
               Stories from the loom, the brush and the lathe.
             </h2>
- 
+
             {/* Oversized Fraunces Italic Pull Quote (Static UI Copy) */}
             <div className="border-l-2 border-turmeric/70 pl-5 py-2">
               <blockquote className="font-serif italic text-xl sm:text-2xl text-oxblood/85 leading-snug">
@@ -451,14 +431,14 @@ export const HomePage: React.FC = () => {
                 — Kriti Heritage Charter
               </p>
             </div>
- 
+
             <p className="text-xs sm:text-sm text-charcoal/80 leading-[1.6]">
               Across India&apos;s hamlets, master artisans safeguard rare techniques that machine automation cannot replicate. Kriti bridges this sacred world to modern digital patrons, ensuring every story, symbol, and artisan receives sovereign attribution.
             </p>
           </div>
         </div>
       </section>
- 
+
       {/* =========================================================================
           4. THE IDEA IN 3 STEPS (Big Numerals 01, 02, 03 & Abstract SVG Icons)
          ========================================================================= */}
@@ -477,7 +457,7 @@ export const HomePage: React.FC = () => {
           </p>
           <OrnamentalDivider className="mt-4" />
         </div>
- 
+
         {/* 3-Column Desktop Grid / 1-Column Mobile */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Step 01 */}
@@ -509,7 +489,7 @@ export const HomePage: React.FC = () => {
               Voice-First Storytelling
             </div>
           </motion.div>
- 
+
           {/* Step 02 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -539,7 +519,7 @@ export const HomePage: React.FC = () => {
               Craft Tag &amp; Share Cards
             </div>
           </motion.div>
- 
+
           {/* Step 03 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -571,7 +551,7 @@ export const HomePage: React.FC = () => {
           </motion.div>
         </div>
       </section>
- 
+
       {/* =========================================================================
           5. FEATURED ARTISTS / DISCOVERY (Asymmetric Grid + Hover Lift/Tilt)
          ========================================================================= */}
@@ -590,7 +570,7 @@ export const HomePage: React.FC = () => {
           </p>
           <BorderBand className="w-48 h-2 mx-auto mt-4" tone="gold" />
         </div>
- 
+
         {/* Search & Filter Bar */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -613,7 +593,7 @@ export const HomePage: React.FC = () => {
                 aria-label="Search traditional artisans"
               />
             </div>
- 
+
             {/* Art Form Filter */}
             <div>
               <select
@@ -630,7 +610,7 @@ export const HomePage: React.FC = () => {
                 ))}
               </select>
             </div>
- 
+
             {/* State Filter */}
             <div>
               <select
@@ -647,7 +627,7 @@ export const HomePage: React.FC = () => {
                 ))}
               </select>
             </div>
- 
+
             {/* Language Filter */}
             <div>
               <select
@@ -665,7 +645,7 @@ export const HomePage: React.FC = () => {
               </select>
             </div>
           </div>
- 
+
           {/* Active filters summary */}
           {hasActiveFilters && (
             <div className="flex items-center justify-between pt-3 mt-3 border-t border-turmeric/20 text-xs text-charcoal/70">
@@ -682,7 +662,7 @@ export const HomePage: React.FC = () => {
             </div>
           )}
         </motion.div>
- 
+
         {/* Artist Cards Display */}
         {loading ? (
           <div className="py-16 text-center text-charcoal/70 text-sm font-serif">
@@ -721,7 +701,7 @@ export const HomePage: React.FC = () => {
                 >
                   <CornerOrnament className="absolute top-2 left-2 w-4 h-4 opacity-30 group-hover:opacity-75 transition-opacity" />
                   <CornerOrnament className="absolute bottom-2 right-2 w-4 h-4 rotate-180 opacity-30 group-hover:opacity-75 transition-opacity" />
- 
+
                   <div>
                     {/* Arch Portrait Header */}
                     <div className="flex items-center gap-4 mb-4">
@@ -739,7 +719,7 @@ export const HomePage: React.FC = () => {
                           </div>
                         )}
                       </div>
- 
+
                       <div className="flex-1 min-w-0">
                         <h3 className="font-serif text-lg sm:text-xl font-bold text-oxblood group-hover:text-madder-red transition truncate">
                           {artist.name}
@@ -757,12 +737,12 @@ export const HomePage: React.FC = () => {
                         </div>
                       </div>
                     </div>
- 
+
                     <p className="text-xs text-charcoal/75 line-clamp-3 leading-[1.6] mb-4">
                       {artist.bio}
                     </p>
                   </div>
- 
+
                   <div className="pt-3 border-t border-turmeric/20 flex items-center justify-between text-xs text-charcoal/70">
                     <span className="flex items-center gap-1 truncate font-serif">
                       <MapPin className="w-3.5 h-3.5 text-oxblood flex-shrink-0" />
@@ -779,7 +759,7 @@ export const HomePage: React.FC = () => {
           </div>
         )}
       </section>
- 
+
       {/* =========================================================================
           6. LIVE NUMBERS (Animated Real Database Counts; Hides If Zero)
          ========================================================================= */}
@@ -793,7 +773,7 @@ export const HomePage: React.FC = () => {
               Preserved in the Digital Studio
             </h2>
           </div>
- 
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {artists.length > 0 && (
               <AnimatedCounter value={artists.length} label="Master Artisans" suffix="+" />
@@ -807,7 +787,7 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
       )}
- 
+
       {/* =========================================================================
           7. CLOSING CTA BAND (Full-Width Oxblood Band with Jaali Line Motif)
          ========================================================================= */}
@@ -816,21 +796,21 @@ export const HomePage: React.FC = () => {
         <div className="absolute top-0 left-0 right-0">
           <BorderBand tone="gold" className="w-full h-2.5 opacity-60" />
         </div>
- 
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-ivory/10 border border-turmeric/40 text-turmeric text-xs font-semibold font-serif">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Patronage for India&apos;s Living Heritage</span>
           </div>
- 
+
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ivory tracking-tight leading-tight">
             Give your generational craft the digital stage it deserves.
           </h2>
- 
+
           <p className="text-sm sm:text-base text-clay/90 max-w-2xl mx-auto leading-relaxed">
             Record your story by voice, export printable Craft Tag QR badges, and receive direct enquiries from patrons with zero platform commission.
           </p>
- 
+
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link
               to="/login"
@@ -839,7 +819,7 @@ export const HomePage: React.FC = () => {
               <UserPlus className="w-4 h-4 text-turmeric" />
               <span>Create your artisan portfolio</span>
             </Link>
- 
+
             <a
               href="#artist-filters"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-ivory/10 border border-turmeric/40 text-ivory font-semibold text-sm hover:bg-ivory/20 transition touch-target cursor-pointer"
@@ -849,7 +829,7 @@ export const HomePage: React.FC = () => {
             </a>
           </div>
         </div>
- 
+
         {/* Bottom Jaali Motif Line */}
         <div className="absolute bottom-0 left-0 right-0">
           <BorderBand tone="gold" className="w-full h-2.5 opacity-60" />

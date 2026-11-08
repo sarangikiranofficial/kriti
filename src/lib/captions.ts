@@ -137,7 +137,7 @@ export function generateCaption({
           `Artist: ${artistName} (Practicing traditional ${artist.art_form} from ${location}, India)\n` +
           `Medium: ${artwork.medium}${artwork.year ? ` • Created: ${artwork.year}` : ''}\n\n` +
           `The Cultural Story & Sacred Lineage:\n"${storySnippet}"\n\n` +
-          `Discover the full narrative and connect with the artist directly on Kala Katha:\n${url}\n\n` +
+          `Discover the full narrative and connect with the artist directly on ${APP_CONFIG.name}:\n${url}\n\n` +
           `${hashtags} #TraditionalArt #IndigenousArt #IndianHeritage`
         );
       }

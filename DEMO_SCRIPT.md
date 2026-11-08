@@ -1,11 +1,11 @@
-# Kala Katha — 4-Minute Hackathon Demonstration Script
+# Kriti (कृति) — 4-Minute Hackathon Demonstration Script
 **Theme / Problem Statement**: "From Craft to Click – Artist Visibility" (ART//CODE Hackathon)
 
 ---
 
 ## ⏱️ Minute 0:00 – 0:30 | The Problem & Cultural Context
 - **Presenter**: *"Namaskaram. India has over 3,000 years of living art traditions—from Kerala Murals and Madhubani to Warli and Pattachitra. But when traditional artisans try to share their work online, they face a severe digital barrier. Modern e-commerce strips away the sacred meaning, requires fluent English typing, and turns sacred heritage into mere commodities."*
-- **Action**: Open the Kala Katha Home Page (`/`). Point to the traditional block-print aesthetic, paper-grain texture, and dignified hero statement: *"Every Traditional Craft Has a Sacred Story."*
+- **Action**: Open the Kriti Home Page (`/`). Point to the authentic heritage motifs, rice-paper texture, terracotta and deep maroon palette, and dignified hero statement: *"From Craft to Click — The Living Heritage of Indian Art."*
 - **Key Message**: Cultural context must travel with every share.
 
 ---

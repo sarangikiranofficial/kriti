@@ -46,7 +46,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
       });
 
       const link = document.createElement('a');
-      link.download = `${artwork.title.toLowerCase().replace(/\s+/g, '-')}-kala-katha.png`;
+      link.download = `${artwork.title.toLowerCase().replace(/\s+/g, '-')}-kriti.png`;
       link.href = dataUrl;
       link.click();
       showToast('Share card image downloaded!', 'success');
@@ -72,7 +72,7 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
       try {
         await navigator.share({
           title: `${artwork.title} by ${artist.name}`,
-          text: `"${artwork.cultural_context.substring(0, 140)}..." Explore traditional ${artist.art_form} on Kala Katha:`,
+          text: `"${artwork.cultural_context.substring(0, 140)}..." Explore traditional ${artist.art_form} on ${APP_CONFIG.name}:`,
           url: shareUrl,
         });
       } catch (err: any) {
@@ -112,8 +112,8 @@ export const ArtworkShareCard: React.FC<ArtworkShareCardProps> = ({
         {/* The Designed Printable Card */}
         <div
           ref={cardRef}
-          className="relative bg-paper-cream border-2 border-terracotta/40 rounded-xl p-5 shadow-md overflow-hidden"
-          style={{ backgroundColor: '#F6EEDC' }}
+          className="relative bg-rice-paper border-2 border-antique-gold/40 rounded-xl p-5 shadow-md overflow-hidden"
+          style={{ backgroundColor: '#FAF6F0' }}
         >
           <CornerOrnament className="absolute top-2 left-2 w-5 h-5 opacity-50" />
           <CornerOrnament className="absolute bottom-2 right-2 w-5 h-5 rotate-180 opacity-50" />

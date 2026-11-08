@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/common/Toast';
@@ -38,9 +39,14 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-paper-grain">
-      <div className="relative max-w-md w-full bg-warm-ivory border border-terracotta/30 rounded-2xl p-8 sm:p-10 shadow-md">
-        <CornerOrnament className="absolute top-3 left-3 w-6 h-6 opacity-40" />
-        <CornerOrnament className="absolute bottom-3 right-3 w-6 h-6 rotate-180 opacity-40" />
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="relative max-w-md w-full bg-warm-ivory border border-antique-gold/30 rounded-2xl p-8 sm:p-10 shadow-md"
+      >
+        <CornerOrnament className="absolute top-3 left-3 w-6 h-6 opacity-40 text-antique-gold" />
+        <CornerOrnament className="absolute bottom-3 right-3 w-6 h-6 rotate-180 opacity-40 text-antique-gold" />
 
         <div className="text-center mb-8">
           <BrandLogo className="w-14 h-14 mx-auto mb-3" />
@@ -97,7 +103,7 @@ export const LoginPage: React.FC = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. artist@kalakatha.art"
+                  placeholder="e.g. artist@kriti.art"
                   className="w-full pl-11 pr-4 py-3 rounded-lg border border-terracotta/30 bg-paper-cream focus:bg-warm-ivory focus:ring-2 focus:ring-madder-red focus:border-transparent outline-none transition text-sm text-charcoal"
                 />
               </div>
@@ -130,7 +136,7 @@ export const LoginPage: React.FC = () => {
             Traditional artists retain 100% ownership of their work and data. Free and open platform.
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

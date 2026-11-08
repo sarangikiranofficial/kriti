@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper-cream: #F6EEDC;
-  --color-warm-ivory: #FBF6EA;
-  --color-indigo-ink: #1F2A44;
-  --color-madder-red: #A63D2F;
-  --color-turmeric: #E0A526;
+  /* Earthy Traditional Indian Art Palette */
+  --color-rice-paper: #FAF6F0;
+  --color-deep-maroon: #8B0000;
+  --color-antique-gold: #D4AF37;
   --color-terracotta: #C8683F;
+
+  /* Harmonized surface & text tokens */
+  --color-paper-cream: #FAF6F0;
+  --color-warm-ivory: #FFFDF9;
+  --color-madder-red: #8B0000;
+  --color-turmeric: #D4AF37;
   --color-leaf-green: #4F6B3A;
+  --color-indigo-ink: #1F2A44;
   --color-charcoal: #2B2622;
 
   --font-serif: "Fraunces", Georgia, serif;
@@ -18,24 +24,32 @@
   --font-ta: "Noto Sans Tamil", sans-serif;
 }
 
-/* Subtle handmade paper grain texture using SVG noise filter */
-.bg-paper-grain {
-  background-color: var(--color-paper-cream);
-  background-image: radial-gradient(rgba(31, 42, 68, 0.03) 1px, transparent 0);
-  background-size: 24px 24px;
+/* Authentic handmade rice-paper texture */
+.bg-rice-paper, .bg-paper-grain {
+  background-color: var(--color-rice-paper);
+  background-image: 
+    radial-gradient(rgba(139, 0, 0, 0.025) 1px, transparent 0),
+    radial-gradient(rgba(212, 175, 55, 0.035) 1px, transparent 0);
+  background-size: 24px 24px, 36px 36px;
+  background-position: 0 0, 12px 12px;
 }
 
-/* Subtle block-print border trim */
+/* Traditional Indian block-print border trim in deep maroon and antique gold */
 .border-blockprint {
   border-image: repeating-linear-gradient(
     45deg,
-    #A63D2F,
-    #A63D2F 8px,
-    #E0A526 8px,
-    #E0A526 16px,
+    #8B0000,
+    #8B0000 8px,
+    #D4AF37 8px,
+    #D4AF37 16px,
     #C8683F 16px,
     #C8683F 24px
   ) 1;
+}
+
+/* Subtle gold metallic shimmer border */
+.border-gold-accent {
+  border-color: rgba(212, 175, 55, 0.35);
 }
 
 /* Ensure minimum touch targets for accessible mobile interactions */

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Share2, MessageCircle, Sparkles, MapPin, MessageSquare, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { updateMetaTags } from '../lib/metaTags';
@@ -59,7 +60,7 @@ export const ArtworkDetailPage: React.FC = () => {
 
         // 3. Update Open Graph meta tags for rich social sharing
         updateMetaTags({
-          title: `${currentArtwork.title} by ${currentArtist.name} | Kala Katha`,
+          title: `${currentArtwork.title} by ${currentArtist.name} | Kriti`,
           description: currentArtwork.cultural_context.substring(0, 160),
           image: currentArtwork.image_url,
           url: `${window.location.origin}/a/${currentArtist.slug}/artwork/${currentArtwork.id}`,
@@ -88,29 +89,34 @@ export const ArtworkDetailPage: React.FC = () => {
         <EmptyState
           title="Artwork Not Found"
           description="The artwork you are looking for does not exist or may have been unlisted."
-          actionText="Explore Artists"
-          onAction={() => window.location.href = '/'}
+          actionText="Explore Artisans"
+          onAction={() => (window.location.href = '/')}
         />
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
+    >
       {/* Back to Portfolio Breadcrumb */}
       <div className="mb-6">
         <Link
           to={`/a/${artist.slug}`}
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-charcoal/80 hover:text-madder-red transition"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-charcoal/80 hover:text-deep-maroon transition"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-deep-maroon" />
           <span>Back to {artist.name}'s Portfolio</span>
         </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Artwork Image Frame */}
-        <div className="bg-paper-cream border border-terracotta/30 rounded-2xl overflow-hidden p-2 shadow-md">
+        <div className="bg-rice-paper border border-antique-gold/35 rounded-2xl overflow-hidden p-2 shadow-md">
           <div className="rounded-xl overflow-hidden bg-warm-ivory flex items-center justify-center">
             <img
               src={artwork.image_url}
@@ -127,15 +133,15 @@ export const ArtworkDetailPage: React.FC = () => {
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-warm-ivory border border-terracotta/30 text-madder-red">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-warm-ivory border border-antique-gold/30 text-deep-maroon">
                 {artist.art_form}
               </span>
-              <span className="text-xs text-charcoal/70">
+              <span className="text-xs text-charcoal/70 capitalize">
                 {artwork.availability}
               </span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-indigo-ink">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-deep-maroon">
               {artwork.title}
             </h1>
             {artwork.title_regional && (
@@ -147,7 +153,7 @@ export const ArtworkDetailPage: React.FC = () => {
             <div className="mt-3 flex items-center gap-3">
               <Link
                 to={`/a/${artist.slug}`}
-                className="font-medium text-sm text-indigo-ink hover:text-madder-red transition flex items-center gap-1.5"
+                className="font-semibold text-sm text-deep-maroon hover:text-terracotta transition flex items-center gap-1.5"
               >
                 <span>By {artist.name}</span>
               </Link>
@@ -160,11 +166,11 @@ export const ArtworkDetailPage: React.FC = () => {
           </div>
 
           {/* Price */}
-          <div className="p-4 bg-warm-ivory border border-terracotta/20 rounded-xl flex items-center justify-between">
+          <div className="p-4 bg-warm-ivory border border-antique-gold/25 rounded-xl flex items-center justify-between">
             <span className="text-xs text-charcoal/70 uppercase tracking-wider font-semibold">
               Valuation
             </span>
-            <span className="font-serif text-xl sm:text-2xl font-bold text-indigo-ink">
+            <span className="font-serif text-xl sm:text-2xl font-bold text-deep-maroon">
               {artwork.is_price_on_request || artwork.price === null
                 ? 'Price on Request'
                 : `₹${artwork.price.toLocaleString('en-IN')}`}
@@ -173,17 +179,17 @@ export const ArtworkDetailPage: React.FC = () => {
 
           {/* Cultural Context / Story */}
           <div>
-            <h3 className="font-serif text-base font-bold text-indigo-ink mb-2 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-madder-red" />
+            <h3 className="font-serif text-base font-bold text-deep-maroon mb-2 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-antique-gold" />
               <span>Cultural Context &amp; Significance</span>
             </h3>
-            <div className="p-5 bg-paper-cream rounded-xl border border-terracotta/25 text-sm text-charcoal/90 leading-relaxed italic whitespace-pre-line">
+            <div className="p-5 bg-rice-paper rounded-xl border border-antique-gold/25 text-sm text-charcoal/90 leading-relaxed italic whitespace-pre-line">
               "{artwork.cultural_context}"
             </div>
           </div>
 
           {/* Technical Specs */}
-          <div className="grid grid-cols-2 gap-3 text-xs bg-warm-ivory p-4 rounded-xl border border-terracotta/20">
+          <div className="grid grid-cols-2 gap-3 text-xs bg-warm-ivory p-4 rounded-xl border border-antique-gold/20">
             <div>
               <span className="text-charcoal/60 block">Medium / Materials</span>
               <span className="font-semibold text-charcoal">{artwork.medium}</span>
@@ -210,16 +216,16 @@ export const ArtworkDetailPage: React.FC = () => {
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <button
               onClick={() => setIsEnquiryModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-madder-red text-warm-ivory text-xs font-semibold hover:bg-madder-red/90 transition shadow-sm touch-target cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-deep-maroon text-rice-paper text-xs font-semibold hover:bg-deep-maroon/90 border border-antique-gold/30 transition shadow-sm touch-target cursor-pointer"
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4 text-antique-gold" />
               <span>Send Enquiry</span>
             </button>
 
             {artist.whatsapp_number && (
               <a
                 href={`https://wa.me/${artist.whatsapp_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                  `Namaskaram ${artist.name}, I am enquiring about your artwork "${artwork.title}" featured on Kala Katha.`
+                  `Namaskaram ${artist.name}, I am enquiring about your artwork "${artwork.title}" featured on Kriti.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -232,15 +238,15 @@ export const ArtworkDetailPage: React.FC = () => {
 
             <button
               onClick={() => setIsShareModalOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl border border-antique-gold/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target cursor-pointer"
             >
-              <Share2 className="w-4 h-4 text-madder-red" />
+              <Share2 className="w-4 h-4 text-deep-maroon" />
               <span>Share Card</span>
             </button>
 
             <button
               onClick={() => setIsCaptionModalOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl border border-terracotta/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl border border-antique-gold/30 text-indigo-ink text-xs font-semibold hover:bg-warm-ivory transition touch-target cursor-pointer"
             >
               <FileText className="w-4 h-4 text-terracotta" />
               <span>Captions</span>
@@ -275,6 +281,6 @@ export const ArtworkDetailPage: React.FC = () => {
           onClose={() => setIsEnquiryModalOpen(false)}
         />
       )}
-    </div>
+    </motion.div>
   );
 };

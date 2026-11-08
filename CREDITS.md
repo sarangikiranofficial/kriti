@@ -1,4 +1,4 @@
-# Credits & Attributions — Kala Katha
+# Credits & Attributions — Kriti (कृति)
 
 ## 1. Typography & Google Fonts (SIL Open Font License - OFL)
 - **Fraunces**: Designed by Phaedra Charles and Flavia Zimbardi. (OFL)
@@ -13,6 +13,7 @@
 - **Vite**: MIT License (Yuxi Evan You & Vite contributors)
 - **TypeScript**: Apache-2.0 License (Microsoft Corporation)
 - **Tailwind CSS**: MIT License (Tailwind Labs, Inc.)
+- **Framer Motion**: MIT License (Framer B.V.)
 - **Supabase JS**: Apache-2.0 / MIT License (Supabase, Inc.)
 - **qrcode**: MIT License (Soldair / Ryan Day)
 - **html-to-image**: MIT License (Wataru Oguchi)

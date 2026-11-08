@@ -1,4 +1,4 @@
-# Setup & Deployment Guide — Kala Katha
+# Setup & Deployment Guide — Kriti
 
 Follow this step-by-step guide to configure the Supabase backend, run the project locally, and deploy to Vercel.
 
@@ -16,7 +16,7 @@ Follow this step-by-step guide to configure the Supabase backend, run the projec
 
 ### Step 2.1: Create a Supabase Project
 1. Log in to your [Supabase Dashboard](https://app.supabase.com).
-2. Click **New Project**, select an organization, and choose a name (e.g. `kala-katha`).
+2. Click **New Project**, select an organization, and choose a name (e.g. `kriti-art`).
 3. Set a strong database password and choose your nearest region (e.g., `South Asia (Mumbai)`).
 4. Click **Create new project** and wait ~2 minutes for provisioning.
 

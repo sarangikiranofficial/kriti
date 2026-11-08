@@ -1,4 +1,4 @@
-# Kala Katha — From Craft to Click
+# Kriti (कृति) — From Craft to Click
 
 A mobile-first, lightweight web application empowering traditional Indian folk, tribal, and classical artisans to build professional digital portfolios, preserve the living cultural context behind their work, and connect directly with global art patrons.
 
@@ -8,9 +8,9 @@ Built for the **ART//CODE Hackathon** | Problem Statement: *"From Craft to Click
 
 ## 1. Project Overview
 
-**Kala Katha** (working title, centrally configurable for easy renaming) is a dignified digital platform created for grassroots Indian craftspeople—masters of Madhubani, Warli, Kerala Mural, Pattachitra, Gond, Kalamkari, Tanjore, and other generational craft traditions.
+**Kriti** (from Sanskrit *कृति*, meaning a consecrated creation, work of art, or masterwork) is an authentic, dignified digital platform created for grassroots Indian craftspeople—masters of Madhubani, Warli, Kerala Mural, Pattachitra, Gond, Kalamkari, Tanjore, and other generational craft traditions.
 
-Unlike conventional e-commerce marketplaces that strip away cultural significance and turn sacred art into commercial commodities, Kala Katha ensures that **cultural context travels with every share**. It provides voice-driven onboarding in regional languages, client-side image compression for low-bandwidth rural connections, downloadable mounted-print share cards, multilingual social caption templates, printable exhibition stall QR codes, and direct buyer/commission enquiries with zero middlemen or commission fees.
+Unlike conventional e-commerce marketplaces that strip away cultural significance and turn sacred art into commercial commodities, Kriti ensures that **cultural context travels with every share**. It provides voice-driven onboarding in regional languages, client-side image compression for low-bandwidth rural connections, downloadable mounted-print share cards, multilingual social caption templates, printable exhibition stall QR codes, and direct buyer/commission enquiries with zero middlemen or commission fees.
 
 Strict quality standard: **Zero fake or hardcoded data**. All artists, artworks, cultural narratives, and enquiries are rendered dynamically from real Supabase Postgres records with dignified empty states.
 
@@ -24,7 +24,7 @@ Traditional Indian artists face severe structural barriers in the modern digital
 3. **Exploitative Intermediaries**: Commercial marketplaces take heavy margins (up to 40-50%) and obscure the artist's contact details, preventing long-term patronage.
 4. **Bandwidth & Device Constraints**: High-resolution mobile camera photos fail to upload over 3G/4G connections without proper client-side image optimization.
 
-**Kala Katha solves this** by making the creation of a professional online identity as simple as speaking into a phone microphone, generating beautiful shareable cards with cultural stories embedded, and enabling direct peer-to-peer patronage.
+**Kriti solves this** by making the creation of a professional online identity as simple as speaking into a phone microphone, generating beautiful shareable cards with cultural stories embedded, and enabling direct peer-to-peer patronage.
 
 ---
 
@@ -119,7 +119,7 @@ flowchart TD
         DesktopClient["Desktop Browser<br/>Studio Dashboard & Discovery"]
     end
 
-    subgraph FrontendApp ["Kala Katha React Application (Vercel)"]
+    subgraph FrontendApp ["Kriti React Application (Vercel)"]
         Router["React Router v7<br/>(/, /login, /dashboard, /a/:slug, /about)"]
         DesignSys["Tailwind v4 Design System<br/>(Paper Grain, Warm Ivory, Madder Red)"]
         VoiceModule["Web Speech Engine<br/>(en-IN, ml-IN, hi-IN, ta-IN • Zero LLM)"]

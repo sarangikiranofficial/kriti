@@ -29,7 +29,7 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
           margin: 2,
           color: {
             dark: '#1F2A44', // Indigo Ink for high contrast
-            light: '#FBF6EA', // Warm Ivory surface
+            light: '#FAF6F0', // Rice paper background
           },
         },
         (error) => {
@@ -65,16 +65,16 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
     brandedCanvas.height = height;
 
     // Background
-    ctx.fillStyle = '#FBF6EA';
+    ctx.fillStyle = '#FAF6F0';
     ctx.fillRect(0, 0, width, height);
 
     // Border
-    ctx.strokeStyle = '#C8683F';
+    ctx.strokeStyle = '#D4AF37';
     ctx.lineWidth = 4;
     ctx.strokeRect(10, 10, width - 20, height - 20);
 
     // Header branding
-    ctx.fillStyle = '#A63D2F';
+    ctx.fillStyle = '#8B0000';
     ctx.font = 'bold 16px serif';
     ctx.textAlign = 'center';
     ctx.fillText(APP_CONFIG.name.toUpperCase(), width / 2, 42);
@@ -99,7 +99,7 @@ export const QRCodePanel: React.FC<QRCodePanelProps> = ({
 
     // Export PNG
     const link = document.createElement('a');
-    link.download = `${artistName.toLowerCase().replace(/\s+/g, '-')}-portfolio-qr.png`;
+    link.download = `${artistName.toLowerCase().replace(/\s+/g, '-')}-kriti-qr.png`;
     link.href = brandedCanvas.toDataURL('image/png');
     link.click();
     showToast('Branded QR code downloaded!', 'success');

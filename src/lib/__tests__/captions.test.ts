@@ -46,14 +46,14 @@ describe('generateCaption', () => {
       tone: 'story',
       artwork: mockArtwork,
       artist: mockArtist,
-      portfolioUrl: 'https://kalakatha.art/a/narayan-marar-kerala-mural',
+      portfolioUrl: 'https://kriti.art/a/narayan-marar-kerala-mural',
     });
 
     expect(caption).toContain('ജീവവൃക്ഷം');
     expect(caption).toContain('നാരായണൻ മാരാർ');
     expect(caption).toContain('Kerala Mural');
     expect(caption).toContain(mockArtwork.cultural_context);
-    expect(caption).toContain('https://kalakatha.art/a/narayan-marar-kerala-mural');
+    expect(caption).toContain('https://kriti.art/a/narayan-marar-kerala-mural');
     expect(caption).toContain('#KeralaArt');
   });
 
@@ -63,7 +63,7 @@ describe('generateCaption', () => {
       tone: 'announcement',
       artwork: mockArtwork,
       artist: mockArtist,
-      portfolioUrl: 'https://kalakatha.art/a/narayan-marar-kerala-mural',
+      portfolioUrl: 'https://kriti.art/a/narayan-marar-kerala-mural',
     });
 
     expect(caption).toContain('Tree of Life');
@@ -73,13 +73,27 @@ describe('generateCaption', () => {
     expect(caption).toContain('#IndianArt');
   });
 
+  it('generates English captions in story tone with Kriti branding', () => {
+    const caption = generateCaption({
+      language: 'en',
+      tone: 'story',
+      artwork: mockArtwork,
+      artist: mockArtist,
+      portfolioUrl: 'https://kriti.art/a/narayan-marar-kerala-mural',
+    });
+
+    expect(caption).toContain('Tree of Life');
+    expect(caption).toContain('Kriti');
+    expect(caption).toContain('#Kriti');
+  });
+
   it('generates Hindi captions in commission tone', () => {
     const caption = generateCaption({
       language: 'hi',
       tone: 'commission',
       artwork: mockArtwork,
       artist: mockArtist,
-      portfolioUrl: 'https://kalakatha.art/a/narayan-marar-kerala-mural',
+      portfolioUrl: 'https://kriti.art/a/narayan-marar-kerala-mural',
     });
 
     expect(caption).toContain('पारंपरिक Kerala Mural');
@@ -94,7 +108,7 @@ describe('generateCaption', () => {
       tone: 'story',
       artwork: mockArtwork,
       artist: mockArtist,
-      portfolioUrl: 'https://kalakatha.art/a/narayan-marar-kerala-mural',
+      portfolioUrl: 'https://kriti.art/a/narayan-marar-kerala-mural',
     });
 
     expect(caption).toContain('பாரம்பரியக் கலையின் தொன்மை');

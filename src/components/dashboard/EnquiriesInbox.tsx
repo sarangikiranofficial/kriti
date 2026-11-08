@@ -154,7 +154,7 @@ export const EnquiriesInbox: React.FC = () => {
                   {isPhoneNumber(enquiry.sender_contact) && (
                     <a
                       href={`https://wa.me/${enquiry.sender_contact.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                        `Namaskaram ${enquiry.sender_name}, thank you for your ${enquiry.enquiry_type} enquiry on Kala Katha.`
+                        `Namaskaram ${enquiry.sender_name}, thank you for your ${enquiry.enquiry_type} enquiry on Kriti.`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -168,7 +168,7 @@ export const EnquiriesInbox: React.FC = () => {
                   {/* Mailto shortcut */}
                   <a
                     href={`mailto:${enquiry.sender_contact}?subject=${encodeURIComponent(
-                      `Response to your ${enquiry.enquiry_type} enquiry on Kala Katha`
+                      `Response to your ${enquiry.enquiry_type} enquiry on Kriti`
                     )}`}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-madder-red text-warm-ivory font-semibold hover:bg-madder-red/90 transition shadow-2xs"
                   >
